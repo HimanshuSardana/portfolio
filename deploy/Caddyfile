@@ -1,0 +1,19 @@
+# Caddyfile for the Astro portfolio.
+# Installed to /etc/caddy/Caddyfile by deploy/setup-arch.sh
+# __DOMAIN__ is substituted at install time (default: himanshu.co).
+# Caddy serves the static files and provisions/renews Let's Encrypt certs automatically.
+
+__DOMAIN__, www.__DOMAIN__ {
+	root * /srv/www/portfolio
+	file_server
+
+	encode gzip
+
+	# Hashed Astro assets: cache hard. HTML: always fresh.
+	header /_astro/* Cache-Control "public, max-age=31536000, immutable"
+	header /*.html Cache-Control "no-store"
+
+	log {
+		output file /var/log/caddy/portfolio.log
+	}
+}
