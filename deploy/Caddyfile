@@ -1,7 +1,45 @@
-# Caddyfile for himanshu.co and its project subsites.
+# Caddyfile for himanshu.co, project subsites, and pre-existing live sites.
 # Installed to /etc/caddy/Caddyfile by deploy/setup-arch.sh, which substitutes
 # __DOMAIN__ (default: himanshu.co) -- so `kite.__DOMAIN__` becomes kite.himanshu.co.
 # Caddy provisions and renews Let's Encrypt certs automatically for every host.
+
+# ---- pre-existing live sites (kept as-is; do not remove) ----
+
+# NOTE: searxng is private. Requests carrying the X-Api-Key header (used by
+# local tooling) and private-network clients are proxied; everyone else gets 403.
+search.himanshu.co {
+	@apiKey header X-Api-Key __SEARXNG_KEY__
+	@private remote_ip 127.0.0.1 ::1 10.0.0.0/8 172.16.0.0/12
+	handle @apiKey {
+		reverse_proxy 127.0.0.1:8080
+	}
+	handle @private {
+		reverse_proxy 127.0.0.1:8080
+	}
+	handle {
+		respond "Forbidden - Private SearXNG" 403
+	}
+}
+
+demo.himanshu.co {
+	reverse_proxy localhost:8765
+}
+
+ai.himanshu.co {
+	reverse_proxy localhost:3001
+}
+
+neuroshield.in {
+	root * /var/www/test
+	file_server
+}
+
+http:// {
+	root * /usr/share/caddy
+	file_server
+}
+
+# ---- portfolio + showcase sites (deployed from github.com/HimanshuSardana/portfolio) ----
 
 __DOMAIN__, www.__DOMAIN__ {
 	root * /srv/www/portfolio
