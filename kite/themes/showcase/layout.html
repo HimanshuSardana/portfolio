@@ -5,55 +5,57 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <meta name="description" content="{{ .Title }} — kite docs" />
 <title>{{ .Title }} — kite</title>
-<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🪁</text></svg>" />
-<link rel="preconnect" href="https://fonts.googleapis.com" />
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect x='8' y='8' width='84' height='84' rx='20' fill='white'/><text x='50' y='68' font-size='52' text-anchor='middle' font-family='monospace' font-weight='bold' fill='%23a3e635'>❯</text></svg>" />
 <style>
-:root{--bg:#0a0a0a;--surface:#111113;--border:#26262b;--text:#f5f5f5;--muted:#d4d4d8;--dim:#8a8a93;--accent:#a3e635;--mono:'JetBrains Mono',ui-monospace,monospace}
+:root{--bg:#000;--text:#ededed;--muted:#a1a1aa;--faint:#71717a;--border:#1f1f23;--code-bg:#0d0d0f}
+[data-theme="light"]{--bg:#fff;--text:#111;--muted:#52525b;--faint:#a1a1aa;--border:#e9e9ec;--code-bg:#f4f4f5}
 *{box-sizing:border-box;margin:0;padding:0}
-body{background:var(--bg);color:var(--muted);font-family:'Inter',system-ui,sans-serif;line-height:1.7;font-size:.95rem;-webkit-font-smoothing:antialiased}
-a{color:inherit}
-::selection{background:var(--accent);color:#0a0a0a}
-.wrap{max-width:720px;margin:0 auto;padding:0 1.5rem}
-header.top{display:flex;align-items:center;justify-content:space-between;padding:1rem 0;font-size:.87rem;border-bottom:1px solid var(--border)}
-header.top a{color:var(--dim);text-decoration:none}
-header.top a:hover{color:var(--text)}
-.brand{font-weight:800;color:var(--text) !important}
-.brand span{color:var(--accent)}
+body{background:var(--bg);color:var(--muted);font-family:-apple-system,BlinkMacSystemFont,"Inter","Segoe UI",sans-serif;font-size:15.5px;line-height:1.75;-webkit-font-smoothing:antialiased}
+.wrap{max-width:660px;margin:0 auto;padding:0 1.25rem}
+.topbar{display:flex;align-items:center;justify-content:center;gap:1.4rem;padding:.9rem 1rem;font-size:.85rem;position:relative;max-width:900px;margin:0 auto}
+.topbar a.nl{color:var(--muted);text-decoration:none}
+.topbar a.nl:hover{color:var(--text)}
+.top-actions{position:absolute;right:1rem;display:flex;align-items:center;gap:.7rem}
+.icon-btn{background:none;border:none;cursor:pointer;color:var(--muted);font-size:1rem;padding:.2rem}
+.icon-btn:hover{color:var(--text)}
+.back{font-size:.85rem;color:var(--muted);text-decoration:none}
+.back:hover{color:var(--text)}
 .prose{padding:2.5rem 0}
-.back{font-size:.82rem;color:var(--dim);text-decoration:none;font-family:var(--mono)}
-.back:hover{color:var(--accent)}
-.prose h1{color:var(--text);font-size:2rem;letter-spacing:-.03em;margin:.75rem 0 1.5rem;line-height:1.2;font-weight:800}
-.prose h2{color:var(--text);font-size:1.25rem;margin:2em 0 .5em;letter-spacing:-.02em}
-.prose p{margin:.9em 0}
+.prose h1{color:var(--text);font-size:1.6rem;letter-spacing:-.02em;margin:.75rem 0 1rem}
+.prose h2{color:var(--text);font-size:1.15rem;margin:2em 0 .4em}
+.prose p{margin:.8em 0}
 .prose ul,.prose ol{margin:.8em 0 .8em 1.4em}
 .prose li{margin:.3em 0}
-.prose a{color:var(--accent)}
-.prose table{width:100%;border-collapse:collapse;margin:1.2em 0;font-size:.85rem}
-.prose th,.prose td{border:1px solid var(--border);padding:.55rem .8rem;text-align:left}
-.prose th{color:var(--text);background:var(--surface)}
-.prose code{font-family:var(--mono);font-size:.85em}
-.prose :not(pre)>code{background:#1a1d12;color:var(--accent);padding:.15em .4em;border-radius:6px}
-.prose pre{background:#0d0d0f;border:1px solid var(--border);border-radius:12px;padding:1.1rem 1.2rem;overflow:auto;font-size:.82rem;line-height:1.75;margin:1.2em 0}
-.prose blockquote{border-left:2px solid var(--accent);padding:.2rem 0 .2rem 1.1rem;margin:1.4em 0;color:var(--text)}
-.toc{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:1rem 1.25rem;margin:0 0 2rem}
-.toc-title{font-family:var(--mono);font-size:.68rem;letter-spacing:.12em;text-transform:uppercase;color:var(--dim);display:block;margin-bottom:.5rem}
+.prose a{color:var(--text);text-decoration:underline;text-decoration-color:var(--faint);text-underline-offset:3px}
+.prose table{width:100%;border-collapse:collapse;margin:1.2em 0;font-size:.85rem;display:block;overflow-x:auto}
+.prose th,.prose td{border:1px solid var(--border);padding:.5rem .75rem;text-align:left}
+.prose th{color:var(--text)}
+.prose code{font-family:ui-monospace,Menlo,monospace;font-size:.87em}
+.prose :not(pre)>code{background:var(--code-bg);color:var(--text);padding:.12em .38em;border-radius:6px}
+.prose pre{background:var(--code-bg);border:1px solid var(--border);border-radius:12px;padding:1rem 1.2rem;overflow:auto;font-size:.82rem;line-height:1.8;margin:1.2em 0}
+.prose blockquote{border-left:2px solid var(--faint);padding-left:1rem;margin:1.2em 0;color:var(--text)}
+.toc{background:var(--code-bg);border:1px solid var(--border);border-radius:12px;padding:.9rem 1.2rem;margin:0 0 1.5rem}
+.toc-title{font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;color:var(--faint);display:block;margin-bottom:.4rem}
 .toc ul{list-style:none;margin:0}
-.toc li{margin:.25rem 0}
-.toc a{font-size:.83rem;color:var(--dim);text-decoration:none}
-.toc a:hover{color:var(--accent)}
-footer{border-top:1px solid var(--border);padding:1.5rem 0 2.5rem;font-family:var(--mono);font-size:.75rem;color:var(--dim)}
+.toc li{margin:.2rem 0}
+.toc a{font-size:.83rem;color:var(--muted);text-decoration:none}
+.toc a:hover{color:var(--text)}
+footer{border-top:1px solid var(--border);margin-top:3rem;padding:1.5rem 0 2.5rem;font-size:.78rem;color:var(--faint)}
 footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:.5rem}
 </style>
 </head>
 <body>
+<div class="topbar">
+<a class="nl" href="../">Home</a>
+<a class="nl" href="../#docs">Docs</a>
+<a class="nl" href="https://github.com/HimanshuSardana/kite" target="_blank" rel="noreferrer">GitHub</a>
+<div class="top-actions">
+<button class="icon-btn" id="theme-toggle" aria-label="Toggle theme">☀</button>
+</div>
+</div>
 <div class="wrap">
-<header class="top">
-<a class="brand" href="../">🪁 <span>kite</span></a>
-<a href="https://github.com/HimanshuSardana/kite" target="_blank" rel="noreferrer">GitHub ↗</a>
-</header>
 <main class="prose">
-<a class="back" href="../">← all docs</a>
+<a class="back" href="../">← kite</a>
 <h1>{{ .Title }}</h1>
 {{ if .TOC }}
 <nav class="toc"><span class="toc-title">On this page</span>
@@ -62,7 +64,24 @@ footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:.5rem
 {{ end }}
 {{ .Content }}
 </main>
+<footer><div class="wrap"><span>© {{ .Year }} Himanshu Sardana</span><span>built with kite</span></div></footer>
 </div>
-<footer><div class="wrap"><span>© {{ .Year }} Himanshu Sardana</span><span>built with kite 🪁</span></div></footer>
+<script>
+(function(){
+  var btn = document.getElementById('theme-toggle');
+  var saved = null;
+  try { saved = localStorage.getItem('kite-theme'); } catch(e) {}
+  if (saved) { document.documentElement.setAttribute('data-theme', saved); }
+  function sync(){ btn.textContent = document.documentElement.getAttribute('data-theme') === 'light' ? '☾' : '☀'; }
+  sync();
+  btn.addEventListener('click', function(){
+    var next = document.documentElement.getAttribute('data-theme') === 'light' ? 'dark' : 'light';
+    if (next === 'dark') document.documentElement.removeAttribute('data-theme');
+    else document.documentElement.setAttribute('data-theme', next);
+    try { localStorage.setItem('kite-theme', next); } catch(e) {}
+    sync();
+  });
+})();
+</script>
 </body>
 </html>

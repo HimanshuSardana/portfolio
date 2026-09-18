@@ -5,238 +5,197 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <meta name="description" content="kite — a fast, minimal static site generator written in Go. Markdown in, website out." />
 <title>{{ .SiteTitle }}</title>
-<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🪁</text></svg>" />
-<link rel="preconnect" href="https://fonts.googleapis.com" />
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect x='8' y='8' width='84' height='84' rx='20' fill='white'/><text x='50' y='68' font-size='52' text-anchor='middle' font-family='monospace' font-weight='bold' fill='%23a3e635'>❯</text></svg>" />
 <style>
-:root{--bg:#0a0a0a;--surface:#111113;--surface2:#17171a;--border:#26262b;--text:#f5f5f5;--muted:#a1a1aa;--dim:#6b6b74;--accent:#a3e635;--mono:'JetBrains Mono',ui-monospace,monospace}
+:root{--bg:#000;--text:#ededed;--muted:#a1a1aa;--faint:#71717a;--border:#1f1f23;--pill:#fff;--pill-text:#000;--ghost:transparent;--ghost-border:#2e2e33;--code-bg:#0d0d0f}
+[data-theme="light"]{--bg:#fff;--text:#111;--muted:#52525b;--faint:#a1a1aa;--border:#e9e9ec;--pill:#111;--pill-text:#fff;--ghost:transparent;--ghost-border:#d4d4d8;--code-bg:#f4f4f5}
 *{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth}
-body{background:var(--bg);color:var(--muted);font-family:'Inter',system-ui,sans-serif;line-height:1.65;font-size:.95rem;-webkit-font-smoothing:antialiased}
-::selection{background:var(--accent);color:#0a0a0a}
-a{color:inherit}
-.wrap{max-width:1020px;margin:0 auto;padding:0 1.5rem}
-/* nav */
-nav.top{position:sticky;top:0;z-index:50;backdrop-filter:blur(14px);background:rgba(10,10,10,.75);border-bottom:1px solid var(--border)}
-.nav-inner{max-width:1020px;margin:0 auto;padding:.85rem 1.5rem;display:flex;align-items:center;justify-content:space-between}
-.brand{font-weight:800;font-size:1.05rem;color:var(--text);text-decoration:none;letter-spacing:-.02em}
-.brand span{color:var(--accent)}
-.nav-links{display:flex;gap:1.4rem;align-items:center}
-.nav-links a{font-size:.87rem;font-weight:500;text-decoration:none;color:var(--muted)}
-.nav-links a:hover{color:var(--text)}
-.nav-cta{border:1px solid var(--border);border-radius:8px;padding:.4rem .9rem !important;color:var(--text) !important}
-.nav-cta:hover{border-color:var(--accent) !important;color:var(--accent) !important}
-@media(max-width:640px){.nav-links a:not(.nav-cta){display:none}}
-/* hero */
-.hero{text-align:center;padding:5.5rem 0 3rem;position:relative}
-.hero::before{content:"";position:absolute;top:-40px;left:50%;transform:translateX(-50%);width:600px;height:300px;background:radial-gradient(ellipse,rgba(163,230,53,.08),transparent 70%);pointer-events:none}
-.eyebrow{display:inline-flex;align-items:center;gap:.5rem;font-family:var(--mono);font-size:.75rem;color:var(--accent);border:1px solid #2a3319;background:#131607;border-radius:99px;padding:.3rem .9rem;margin-bottom:1.5rem}
-.hero h1{font-size:clamp(3.5rem,9vw,6rem);font-weight:800;letter-spacing:-.05em;color:var(--text);line-height:1}
-.hero h1 span{color:var(--accent)}
-.tagline{font-size:1.15rem;max-width:560px;margin:1.25rem auto 0}
-.tagline b{color:var(--text)}
-.install{display:flex;align-items:center;justify-content:space-between;gap:1rem;max-width:560px;margin:2rem auto 0;background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:.8rem 1rem;font-family:var(--mono);font-size:.83rem}
-.install code{color:var(--text);overflow-x:auto;white-space:nowrap}
-.install code .p{color:var(--accent)}
-.copy{background:var(--surface2);border:1px solid var(--border);border-radius:8px;color:var(--muted);font-family:var(--mono);font-size:.75rem;padding:.4rem .8rem;cursor:pointer;flex-shrink:0}
-.copy:hover{color:var(--accent);border-color:var(--accent)}
-.cta-row{display:flex;gap:.8rem;justify-content:center;margin-top:1.5rem;flex-wrap:wrap}
-.btn{display:inline-flex;align-items:center;gap:.5rem;padding:.7rem 1.4rem;border-radius:10px;font-weight:600;font-size:.92rem;text-decoration:none;border:1px solid var(--border);transition:.15s}
-.btn-primary{background:var(--accent);border-color:var(--accent);color:#0a0a0a}
-.btn-primary:hover{filter:brightness(1.1)}
-.btn-ghost:hover{border-color:var(--accent);color:var(--text)}
-/* terminal */
-.term{max-width:640px;margin:2.5rem auto 0;background:#0d0d0f;border:1px solid var(--border);border-radius:14px;overflow:hidden;text-align:left;box-shadow:0 30px 80px rgba(0,0,0,.5)}
-.term-bar{display:flex;gap:.45rem;padding:.75rem 1rem;border-bottom:1px solid var(--border)}
-.dot{width:11px;height:11px;border-radius:50%}
-.term-body{padding:1.1rem 1.2rem;font-family:var(--mono);font-size:.82rem;line-height:1.8}
-.term-body .cmd{color:var(--text)}
-.term-body .cmd::before{content:"$ ";color:var(--accent)}
-.term-body .out{color:var(--dim)}
-.term-body .ok{color:var(--accent)}
-/* stats */
-.stats{display:flex;justify-content:center;gap:2.5rem;flex-wrap:wrap;padding:2.5rem 0 1rem;font-family:var(--mono)}
-.stat{text-align:center}
-.stat b{display:block;font-size:1.3rem;color:var(--text)}
-.stat span{font-size:.72rem;color:var(--dim)}
+body{background:var(--bg);color:var(--muted);font-family:-apple-system,BlinkMacSystemFont,"Inter","Segoe UI",sans-serif;font-size:15.5px;line-height:1.75;-webkit-font-smoothing:antialiased;transition:background .2s}
+::selection{background:#a3e635;color:#000}
+.wrap{max-width:660px;margin:0 auto;padding:0 1.25rem}
+/* top nav */
+.topbar{display:flex;align-items:center;justify-content:center;gap:1.4rem;padding:.9rem 1rem;font-size:.85rem;position:relative;max-width:900px;margin:0 auto}
+.topbar a.nl{color:var(--muted);text-decoration:none}
+.topbar a.nl:hover{color:var(--text)}
+.top-actions{position:absolute;right:1rem;display:flex;align-items:center;gap:.7rem}
+.gh-link{color:var(--muted);text-decoration:none;display:flex;align-items:center}
+.gh-link:hover{color:var(--text)}
+.icon-btn{background:none;border:none;cursor:pointer;color:var(--muted);font-size:1rem;padding:.2rem}
+.icon-btn:hover{color:var(--text)}
+.pill-sm{background:var(--pill);color:var(--pill-text);border-radius:99px;padding:.42rem .95rem;font-size:.8rem;font-weight:600;text-decoration:none;white-space:nowrap}
+@media(max-width:640px){.topbar{justify-content:flex-start;overflow-x:auto}.topbar a.nl.hide-m{display:none}}
+/* logo */
+.logo-row{display:flex;align-items:center;gap:.8rem;margin:4.5rem 0 2.2rem}
+.logo-mark{width:42px;height:42px;border-radius:11px;background:#fff;display:flex;align-items:center;justify-content:center;font-family:ui-monospace,monospace;font-weight:700;font-size:1.5rem;color:#65a30d;flex-shrink:0}
+.logo-name{font-size:1.35rem;font-weight:600;color:var(--text);letter-spacing:-.01em}
+/* typewriter */
+.type-line{font-size:1.3rem;color:var(--text);min-height:2.2em;margin-bottom:1.2rem;letter-spacing:-.01em}
+.cursor{display:inline-block;width:2px;height:1.15em;background:var(--text);vertical-align:text-bottom;margin-left:2px;animation:blink 1s steps(1) infinite}
+@keyframes blink{50%{opacity:0}}
+/* prose */
+.lede{margin-bottom:2rem}
+.lede a,.feat-list a,.faq a{color:var(--text);text-decoration:underline;text-decoration-color:var(--faint);text-underline-offset:3px}
+.lede a:hover,.feat-list a:hover,.faq a:hover{text-decoration-color:var(--text)}
+code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.87em}
+/* buttons */
+.btn-row{display:flex;gap:.7rem;flex-wrap:wrap;margin-bottom:3rem}
+.btn{display:inline-flex;align-items:center;gap:.5rem;border-radius:99px;padding:.68rem 1.35rem;font-size:.9rem;font-weight:600;text-decoration:none;transition:.15s}
+.btn-solid{background:var(--pill);color:var(--pill-text)}
+.btn-solid:hover{opacity:.88}
+.btn-ghost{border:1px solid var(--ghost-border);color:var(--text)}
+.btn-ghost:hover{border-color:var(--faint)}
 /* sections */
-section{padding:3.5rem 0}
-.sec-kicker{font-family:var(--mono);font-size:.75rem;color:var(--accent);letter-spacing:.1em;text-transform:uppercase;text-align:center;margin-bottom:.6rem}
-.sec-title{font-size:clamp(1.6rem,4vw,2.3rem);font-weight:800;letter-spacing:-.03em;color:var(--text);text-align:center}
-.sec-sub{text-align:center;max-width:520px;margin:.75rem auto 0}
-.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin-top:2.25rem}
-@media(max-width:720px){.grid3{grid-template-columns:1fr}}
-.card{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:1.4rem;transition:.2s}
-.card:hover{border-color:#3a3a41;transform:translateY(-3px)}
-.card .icon{font-size:1.4rem;margin-bottom:.7rem}
-.card h3{color:var(--text);font-size:1rem;margin-bottom:.4rem}
-.card p{font-size:.87rem}
-.card a.more{font-size:.82rem;color:var(--accent);text-decoration:none;font-family:var(--mono)}
-/* docs */
-.doc-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1rem;margin-top:2.25rem}
-@media(max-width:720px){.doc-grid{grid-template-columns:1fr}}
-.doc-card{display:block;background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:1.4rem;text-decoration:none;transition:.2s}
-.doc-card:hover{border-color:var(--accent);transform:translateY(-3px)}
-.doc-card h3{color:var(--text);font-size:1rem;margin-bottom:.3rem}
-.doc-card h3 span{color:var(--accent)}
-.doc-card time{font-family:var(--mono);font-size:.72rem;color:var(--dim)}
-.doc-card .tags{margin-top:.6rem;display:flex;gap:.4rem}
-.tag{font-family:var(--mono);font-size:.68rem;background:var(--surface2);border:1px solid var(--border);padding:.15rem .55rem;border-radius:99px;color:var(--dim)}
-/* themes */
-.swatches{display:grid;grid-template-columns:repeat(5,1fr);gap:.8rem;margin-top:2.25rem}
-@media(max-width:720px){.swatches{grid-template-columns:repeat(2,1fr)}}
-.swatch{border:1px solid var(--border);border-radius:12px;overflow:hidden;text-decoration:none;transition:.2s;background:var(--surface)}
-.swatch:hover{transform:translateY(-3px);border-color:#3a3a41}
-.sw{height:64px}
-.sw-name{font-family:var(--mono);font-size:.72rem;color:var(--text);padding:.55rem .7rem}
+.sec-label{font-size:.85rem;color:var(--muted);margin:2.8rem 0 .8rem}
+.feat-list{list-style:none}
+.feat-list li{padding:.32rem 0 .32rem 1.3rem;position:relative}
+.feat-list li::before{content:"–";position:absolute;left:0;color:var(--faint)}
+.feat-list b{color:var(--text);font-weight:600}
+/* quickstart box */
+.cmd-box{background:var(--code-bg);border:1px solid var(--border);border-radius:12px;padding:1rem 1.2rem;font-family:ui-monospace,Menlo,monospace;font-size:.82rem;line-height:1.9;margin-top:1rem;overflow-x:auto;white-space:pre}
+.cmd-box .c{color:var(--faint)} .cmd-box .p{color:#65a30d}
 /* faq */
-.faq{max-width:680px;margin:2rem auto 0;display:flex;flex-direction:column;gap:.7rem}
-.faq details{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:1rem 1.25rem}
-.faq summary{cursor:pointer;color:var(--text);font-weight:600;font-size:.93rem;list-style:none;display:flex;justify-content:space-between;align-items:center;gap:1rem}
-.faq summary::-webkit-details-marker{display:none}
-.faq summary::after{content:"+";color:var(--accent);font-size:1.2rem;font-weight:400}
-.faq details[open] summary::after{content:"–"}
-.faq details p{font-size:.88rem;margin-top:.6rem}
-.faq a{color:var(--accent)}
-/* cta + footer */
-.final{text-align:center;border:1px solid var(--border);border-radius:18px;padding:3.5rem 1.5rem;background:linear-gradient(180deg,#101208,#0a0a0a);margin:1rem 0 3rem}
-.final h2{font-size:clamp(1.6rem,4vw,2.4rem);color:var(--text);letter-spacing:-.03em;font-weight:800}
-footer{border-top:1px solid var(--border);padding:2.5rem 0;font-size:.85rem}
-.foot-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:2rem;max-width:1020px;margin:0 auto;padding:0 1.5rem}
-@media(max-width:720px){.foot-grid{grid-template-columns:1fr 1fr}}
-.foot-grid h4{color:var(--text);font-size:.8rem;margin-bottom:.7rem}
-.foot-grid a{display:block;text-decoration:none;margin-bottom:.45rem}
-.foot-grid a:hover{color:var(--text)}
-.foot-base{display:flex;justify-content:space-between;flex-wrap:wrap;gap:.5rem;max-width:1020px;margin:2rem auto 0;padding:0 1.5rem;font-family:var(--mono);font-size:.72rem;color:var(--dim)}
-pre.code{background:#0d0d0f;border:1px solid var(--border);border-radius:12px;padding:1.1rem 1.2rem;font-family:var(--mono);font-size:.82rem;line-height:1.8;overflow-x:auto;color:var(--muted);max-width:640px;margin:2rem auto 0;text-align:left}
-pre.code .c{color:var(--dim)} pre.code .k{color:var(--accent)}
+.qa{margin-bottom:1.4rem}
+.qa .q{color:var(--text);font-weight:600;margin-bottom:.2rem}
+/* footer */
+footer.site{margin-top:4rem;border-top:1px solid var(--border);padding:2rem 0 3rem;font-size:.83rem}
+.foot-cols{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;margin-bottom:2rem}
+@media(max-width:560px){.foot-cols{grid-template-columns:1fr 1fr}}
+.foot-cols h5{color:var(--text);font-size:.78rem;margin-bottom:.55rem;font-weight:600}
+.foot-cols a{display:block;color:var(--muted);text-decoration:none;margin-bottom:.35rem}
+.foot-cols a:hover{color:var(--text)}
+.foot-base{display:flex;justify-content:space-between;flex-wrap:wrap;gap:.5rem;color:var(--faint);font-size:.78rem}
 </style>
 </head>
 <body>
-<nav class="top"><div class="nav-inner">
-<a class="brand" href="./">🪁 <span>kite</span></a>
-<div class="nav-links">
-<a href="#features">Features</a><a href="#docs">Docs</a><a href="#themes">Themes</a><a href="#faq">FAQ</a>
-<a class="nav-cta" href="https://github.com/HimanshuSardana/kite" target="_blank" rel="noreferrer">GitHub ↗</a>
-</div></div></nav>
+<div class="topbar">
+<a class="nl hide-m" href="#docs">Docs</a>
+<a class="nl hide-m" href="#themes">Themes</a>
+<a class="nl hide-m" href="#faq">FAQ</a>
+<a class="nl" href="https://github.com/HimanshuSardana/kite" target="_blank" rel="noreferrer">GitHub</a>
+<div class="top-actions">
+<a class="gh-link" href="https://github.com/HimanshuSardana/kite" target="_blank" rel="noreferrer" aria-label="GitHub">
+<svg width="18" height="18" viewBox="0 0 16 16" fill="currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27s1.36.09 2 .27c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8z"/></svg>
+</a>
+<a class="pill-sm" href="#docs">Get started</a>
+<button class="icon-btn" id="theme-toggle" aria-label="Toggle theme">☀</button>
+</div>
+</div>
 
 <div class="wrap">
-<header class="hero">
-<div class="eyebrow">● v1.0.0 · free &amp; open source · written in Go</div>
-<h1>Meet <span>kite</span></h1>
-<p class="tagline">The minimal static site generator. <b>Markdown in, website out</b> — no bundler, no lockfile, no 100MB of RAM on your VPS.</p>
-<div class="install"><code><span class="p">$</span> go install github.com/HimanshuSardana/kite@latest</code><button class="copy" onclick="navigator.clipboard.writeText('go install github.com/HimanshuSardana/kite@latest');this.textContent='copied ✓'">copy</button></div>
-<div class="cta-row">
-<a class="btn btn-primary" href="#docs">Get started →</a>
-<a class="btn btn-ghost" href="https://github.com/HimanshuSardana/kite" target="_blank" rel="noreferrer">Star on GitHub</a>
+<div class="logo-row">
+<div class="logo-mark">❯</div>
+<div class="logo-name">kite</div>
 </div>
-<div class="term">
-<div class="term-bar"><span class="dot" style="background:#ff5f57"></span><span class="dot" style="background:#febc2e"></span><span class="dot" style="background:#28c840"></span></div>
-<div class="term-body">
-<div class="cmd">kite build</div>
-<div class="out">Building with theme: showcase</div>
-<div class="out">Compiling Quickstart (1ms)</div>
-<div class="out">Compiling Writing posts (0ms)</div>
-<div class="out">Compiling Building themes (1ms)</div>
-<div class="out">All files processed!</div>
-<div class="out">Home page written to output/index.html</div>
-<div class="out">Feed written to ./output/feed.xml</div>
-<div class="ok">Build completed successfully!</div>
-</div>
-</div>
-<div class="stats">
-<div class="stat"><b>~ms</b><span>per-page builds</span></div>
-<div class="stat"><b>1</b><span>single binary</span></div>
-<div class="stat"><b>0</b><span>runtime deps</span></div>
-<div class="stat"><b>10</b><span>built-in themes</span></div>
-<div class="stat"><b>RSS</b><span>out of the box</span></div>
-</div>
-</header>
 
-<section id="features">
-<div class="sec-kicker">Features</div>
-<h2 class="sec-title">Everything a blog needs.<br />Nothing it doesn't.</h2>
-<div class="grid3">
-<div class="card"><div class="icon">⚡</div><h3>Blazing builds</h3><p>Go-compiled Markdown rendering. Pages compile in single-digit milliseconds — the whole site before your finger leaves Enter.</p></div>
-<div class="card"><div class="icon">📦</div><h3>One binary, zero deps</h3><p><code style="font-family:var(--mono);font-size:.8em">go install</code> and you're done. No Node, no bundler, no lockfile with 900 transitive packages.</p></div>
-<div class="card"><div class="icon">🎨</div><h3>Themes are just HTML</h3><p>Two template files, standard Go <code style="font-family:var(--mono);font-size:.8em">html/template</code> syntax. No new language to learn, nothing to eject from.</p></div>
-<div class="card"><div class="icon">🔥</div><h3>Live reload</h3><p><code style="font-family:var(--mono);font-size:.8em">kite serve</code> watches content, themes and config, rebuilds and refreshes your browser automatically.</p></div>
-<div class="card"><div class="icon">📡</div><h3>RSS included</h3><p>Every build regenerates <code style="font-family:var(--mono);font-size:.8em">feed.xml</code>. Readers can subscribe with zero plugins or config.</p></div>
-<div class="card"><div class="icon">📑</div><h3>TOC as data</h3><p>Headings are parsed into structured table-of-contents data — render a sidebar, a dropdown, or nothing at all.</p></div>
-</div>
-</section>
+<div class="type-line"><span id="typed"></span><span class="cursor"></span></div>
 
-<section id="docs">
-<div class="sec-kicker">Docs</div>
-<h2 class="sec-title">Up and running in a minute</h2>
-<p class="sec-sub"><code style="font-family:var(--mono)">kite init</code> scaffolds everything, then it's just Markdown files and <code style="font-family:var(--mono)">kite build</code>.</p>
-<pre class="code"><span class="c"># install</span>
-go install github.com/HimanshuSardana/kite@latest
-<span class="c"># scaffold + write</span>
-kite init <span class="k">&&</span> hx content/hello.md
-<span class="c"># build + preview</span>
-kite build <span class="k">&&</span> kite serve  <span class="c"># → http://localhost:8000</span></pre>
-{{ if .Posts }}
-<div class="doc-grid">
+<p class="lede">Free and open source static site generator written in <a href="https://go.dev" target="_blank" rel="noreferrer">Go</a>. Markdown files in, website out — with themes, live reload and RSS, and no bundler, lockfile, or 100MB of RAM on your VPS. This page is <a href="https://github.com/HimanshuSardana/kite">kite</a> output.</p>
+
+<div class="btn-row">
+<a class="btn btn-solid" href="#docs">⤓&nbsp; Quickstart</a>
+<a class="btn btn-ghost" href="https://github.com/HimanshuSardana/kite" target="_blank" rel="noreferrer">
+<svg width="15" height="15" viewBox="0 0 16 16" fill="currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27s1.36.09 2 .27c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8z"/></svg>
+View on GitHub</a>
+</div>
+
+<div class="sec-label">Features</div>
+<ul class="feat-list">
+<li><b>Blazing builds</b>: pages compile in single-digit milliseconds — the whole site before your finger leaves Enter</li>
+<li><b>Zero dependencies</b>: one <code>go install</code>, no Node, no bundler, no lockfile</li>
+<li><b>Plain-HTML themes</b>: two template files in standard Go <code>html/template</code> — <a href="themes-guide/">nothing new to learn</a></li>
+<li><b>Live reload</b>: <code>kite serve</code> watches content, themes and config and refreshes your browser — <a href="cli-reference/">see the CLI</a></li>
+<li><b>RSS included</b>: <code>feed.xml</code> regenerates on every build, zero plugins</li>
+<li><b>Table of contents</b>: headings parsed into structured data — render a sidebar, a dropdown, or nothing</li>
+<li><b>10 built-in themes</b>: from gruvbox to tufte — <a href="#themes">browse below</a></li>
+<li><b>Open source</b>: free, source on <a href="https://github.com/HimanshuSardana/kite" target="_blank" rel="noreferrer">GitHub</a> — <a href="why-kite/">why it exists</a></li>
+</ul>
+
+<div class="sec-label" id="docs">Docs</div>
+<ul class="feat-list">
+<li><b>Install &amp; build</b>: <code>go install github.com/HimanshuSardana/kite@latest</code>, then <code>kite init</code>, <code>kite build</code>, <code>kite serve</code> — <a href="quickstart/">full quickstart</a></li>
 {{ range .Posts }}
-<a class="doc-card" href="{{ .Slug }}/">
-<h3><span>→</span> {{ .Title }}</h3>
-<time>{{ .Date }}</time>
-<div class="tags">{{ range .Tags }}<span class="tag">{{ . }}</span>{{ end }}</div>
-</a>
+<li><b>{{ .Title }}</b>{{ range .Tags }} · {{ . }}{{ end }} — <a href="{{ .Slug }}/">read</a></li>
 {{ end }}
-</div>
-{{ end }}
-</section>
+</ul>
 
-<section id="themes">
-<div class="sec-kicker">Themes</div>
-<h2 class="sec-title">Ten themes, zero config</h2>
-<p class="sec-sub">Ship with kite. Preview any of them instantly with <code style="font-family:var(--mono)">kite serve &lt;name&gt;</code> — or fork one into your own.</p>
-<div class="swatches">
-<a class="swatch" href="https://github.com/HimanshuSardana/kite/tree/main/themes/modern-light" target="_blank" rel="noreferrer"><div class="sw" style="background:linear-gradient(135deg,#ffffff 60%,#e8e6e1)"></div><div class="sw-name">modern-light</div></a>
-<a class="swatch" href="https://github.com/HimanshuSardana/kite/tree/main/themes/modern-dark" target="_blank" rel="noreferrer"><div class="sw" style="background:linear-gradient(135deg,#0c0c0b 60%,#c9a96e)"></div><div class="sw-name">modern-dark</div></a>
-<a class="swatch" href="https://github.com/HimanshuSardana/kite/tree/main/themes/gruvbox" target="_blank" rel="noreferrer"><div class="sw" style="background:linear-gradient(135deg,#282828 60%,#fabd2f)"></div><div class="sw-name">gruvbox</div></a>
-<a class="swatch" href="https://github.com/HimanshuSardana/kite/tree/main/themes/everforest" target="_blank" rel="noreferrer"><div class="sw" style="background:linear-gradient(135deg,#2d353b 60%,#a7c080)"></div><div class="sw-name">everforest</div></a>
-<a class="swatch" href="https://github.com/HimanshuSardana/kite/tree/main/themes/rose-pine" target="_blank" rel="noreferrer"><div class="sw" style="background:linear-gradient(135deg,#191724 60%,#ebbcba)"></div><div class="sw-name">rose-pine</div></a>
-<a class="swatch" href="https://github.com/HimanshuSardana/kite/tree/main/themes/tufte" target="_blank" rel="noreferrer"><div class="sw" style="background:linear-gradient(135deg,#fffff8 60%,#111111)"></div><div class="sw-name">tufte</div></a>
-<a class="swatch" href="https://github.com/HimanshuSardana/kite/tree/main/themes/terminal-gruvbox" target="_blank" rel="noreferrer"><div class="sw" style="background:linear-gradient(135deg,#1d2021 60%,#83a598)"></div><div class="sw-name">terminal-gruvbox</div></a>
-<a class="swatch" href="https://github.com/HimanshuSardana/kite/tree/main/themes/modern-dark-catppuccin" target="_blank" rel="noreferrer"><div class="sw" style="background:linear-gradient(135deg,#1e1e2e 60%,#cba6f7)"></div><div class="sw-name">catppuccin</div></a>
-<a class="swatch" href="https://github.com/HimanshuSardana/kite/tree/main/themes/modern-dark-2" target="_blank" rel="noreferrer"><div class="sw" style="background:linear-gradient(135deg,#0a0a0f 60%,#7dd3fc)"></div><div class="sw-name">modern-dark-2</div></a>
-<a class="swatch" href="https://github.com/HimanshuSardana/kite/tree/main/themes/magical" target="_blank" rel="noreferrer"><div class="sw" style="background:linear-gradient(135deg,#1a1033 60%,#e879f9)"></div><div class="sw-name">magical</div></a>
-</div>
-</section>
+<div class="cmd-box"><span class="c"># install</span>
+<span class="p">$</span> go install github.com/HimanshuSardana/kite@latest
+<span class="c"># scaffold + write</span>
+<span class="p">$</span> kite init && hx content/hello.md
+<span class="c"># build + preview → http://localhost:8000</span>
+<span class="p">$</span> kite build && kite serve</div>
 
-<section id="faq">
-<div class="sec-kicker">FAQ</div>
-<h2 class="sec-title">Questions, answered</h2>
+<div class="sec-label" id="themes">Themes</div>
+<ul class="feat-list">
+<li><b><code>modern-light</code></b>, <b><code>modern-dark</code></b>, <b><code>modern-dark-2</code></b>, <b><code>catppuccin</code></b> — clean defaults</li>
+<li><b><code>gruvbox</code></b>, <b><code>everforest</code></b>, <b><code>rose-pine</code></b>, <b><code>terminal-gruvbox</code></b> — terminal palettes</li>
+<li><b><code>tufte</code></b>, <b><code>magical</code></b> — editorial and playful</li>
+<li>Preview any of them with <code>kite serve &lt;name&gt;</code> — <a href="https://github.com/HimanshuSardana/kite/tree/main/themes" target="_blank" rel="noreferrer">browse source</a></li>
+</ul>
+
+<div class="sec-label" id="faq">FAQ</div>
 <div class="faq">
-<details><summary>Is kite free?</summary><p>Yes — free and open source. The source is on <a href="https://github.com/HimanshuSardana/kite">GitHub</a>, grab the binary with <code style="font-family:var(--mono)">go install</code>.</p></details>
-<details><summary>Why another static site generator?</summary><p>Hugo is powerful but comes with its own templating world to learn; JS frameworks eat 100MB of RAM to render Markdown. Kite is the smallest tool that does the job: one binary, millisecond builds, themes in plain HTML. Read the full story in <a href="why-kite/">Why kite exists</a>.</p></details>
-<details><summary>How fast is it, really?</summary><p>Each page compiles in ~0–2ms. A personal blog builds before your finger leaves the Enter key — see the terminal above, that's real output.</p></details>
-<details><summary>Do I need Go installed to use my site?</summary><p>Only to install kite itself (<code style="font-family:var(--mono)">go install</code> needs Go 1.25+). The output is plain static HTML — host it anywhere, no Go, no server logic.</p></details>
-<details><summary>Can I bring my own theme?</summary><p>Yes — two HTML files (<code style="font-family:var(--mono)">home.html</code> + <code style="font-family:var(--mono)">layout.html</code>) with standard Go template syntax. This entire page is a custom kite theme. Guide: <a href="themes-guide/">Building themes</a>.</p></details>
-<details><summary>Does it do RSS, drafts, taxonomies?</summary><p>RSS yes — <code style="font-family:var(--mono)">feed.xml</code> regenerates every build. Drafts and taxonomies: not yet. If you need those today, Hugo is the honest recommendation.</p></details>
-</div>
-</section>
-
-<div class="final">
-<h2>Ship your blog tonight.</h2>
-<p style="margin:.75rem 0 1.5rem">One binary. One minute. Zero dependencies.</p>
-<div class="cta-row">
-<a class="btn btn-primary" href="#docs">Read the docs →</a>
-<a class="btn btn-ghost" href="https://github.com/HimanshuSardana/kite" target="_blank" rel="noreferrer">GitHub ↗</a>
-</div>
-</div>
+<div class="qa"><p class="q">Is kite free?</p><p>Yes — free and open source. Grab it with <code>go install</code> (needs Go 1.25+). The output is plain static HTML, hostable anywhere.</p></div>
+<div class="qa"><p class="q">Why another static site generator?</p><p>Hugo is powerful but brings its own templating world; JS frameworks burn 100MB of RAM to render Markdown. Kite is the smallest tool that does the job — <a href="why-kite/">full story here</a>.</p></div>
+<div class="qa"><p class="q">Can I bring my own theme?</p><p>Yes — <code>home.html</code> + <code>layout.html</code> in standard Go template syntax. This page is a custom theme — <a href="themes-guide/">guide here</a>.</p></div>
+<div class="qa"><p class="q">Does it do RSS? Drafts? Taxonomies?</p><p>RSS yes, every build. Drafts and taxonomies: not yet — if you need those today, Hugo is the honest recommendation.</p></div>
+<div class="qa"><p class="q">I found a bug / want a feature?</p><p>Open an <a href="https://github.com/HimanshuSardana/kite/issues" target="_blank" rel="noreferrer">issue</a> or pull request on GitHub.</p></div>
 </div>
 
-<footer><div class="foot-grid">
-<div><a class="brand" href="./" style="margin-bottom:.6rem;display:inline-block">🪁 <span style="color:var(--accent)">kite</span></a><p style="font-size:.83rem;max-width:26ch">Markdown in, website out. A minimal SSG in Go.</p></div>
-<div><h4>Product</h4><a href="#features">Features</a><a href="#themes">Themes</a><a href="#faq">FAQ</a></div>
-<div><h4>Resources</h4><a href="quickstart/">Quickstart</a><a href="cli-reference/">CLI reference</a><a href="feed.xml">RSS</a></div>
-<div><h4>Social</h4><a href="https://github.com/HimanshuSardana/kite" target="_blank" rel="noreferrer">GitHub</a><a href="https://github.com/HimanshuSardana" target="_blank" rel="noreferrer">Author</a></div>
+<footer class="site">
+<div class="foot-cols">
+<div><h5>Product</h5><a href="#docs">Docs</a><a href="#themes">Themes</a><a href="#faq">FAQ</a></div>
+<div><h5>Resources</h5><a href="quickstart/">Quickstart</a><a href="cli-reference/">CLI reference</a><a href="feed.xml">RSS</a></div>
+<div><h5>Project</h5><a href="https://github.com/HimanshuSardana/kite" target="_blank" rel="noreferrer">GitHub</a><a href="https://github.com/HimanshuSardana/kite/issues" target="_blank" rel="noreferrer">Issues</a></div>
+<div><h5>Author</h5><a href="https://github.com/HimanshuSardana" target="_blank" rel="noreferrer">Himanshu</a><a href="../">Portfolio</a></div>
 </div>
-<div class="foot-base"><span>© {{ .Year }} Himanshu Sardana · open source</span><span>this page is kite output 🪁</span></div>
+<div class="foot-base"><span>© {{ .Year }} Himanshu Sardana</span><span>Open source · this page is kite output</span></div>
 </footer>
+</div>
+
+<script>
+// theme toggle
+(function(){
+  var btn = document.getElementById('theme-toggle');
+  var saved = null;
+  try { saved = localStorage.getItem('kite-theme'); } catch(e) {}
+  if (saved) { document.documentElement.setAttribute('data-theme', saved); }
+  function sync(){ btn.textContent = document.documentElement.getAttribute('data-theme') === 'light' ? '☾' : '☀'; }
+  sync();
+  btn.addEventListener('click', function(){
+    var next = document.documentElement.getAttribute('data-theme') === 'light' ? 'dark' : 'light';
+    if (next === 'dark') document.documentElement.removeAttribute('data-theme');
+    else document.documentElement.setAttribute('data-theme', next);
+    try { localStorage.setItem('kite-theme', next); } catch(e) {}
+    sync();
+  });
+})();
+// typewriter
+(function(){
+  var el = document.getElementById('typed');
+  var phrases = [
+    'Markdown in, website out.',
+    'One binary. Zero dependencies.',
+    'Builds in milliseconds.',
+    'Themes are just HTML.'
+  ];
+  var pi = 0, ci = 0, deleting = false;
+  function tick(){
+    var full = phrases[pi];
+    if (!deleting) {
+      ci++;
+      if (ci >= full.length) { ci = full.length; deleting = true; setTimeout(tick, 1600); el.textContent = full; return; }
+      setTimeout(tick, 45);
+    } else {
+      ci--;
+      if (ci <= 0) { ci = 0; deleting = false; pi = (pi + 1) % phrases.length; setTimeout(tick, 350); el.textContent = ''; return; }
+      setTimeout(tick, 22);
+    }
+    el.textContent = full.slice(0, ci);
+  }
+  tick();
+})();
+</script>
 </body>
 </html>
