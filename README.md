@@ -11,6 +11,8 @@ My own Go static site generator. Projects curated from https://github.com/Himans
 - `kite/` — standalone showcase subsite for kite itself (own `config.yaml`,
   `content/`, `themes/`). Built with kite, deployed to `/kite/`:
   `cd kite && kite build` (preview: `kite serve --port 8001`)
+- `apollo/` — same treatment for the apollo CLI agent, deployed to `/apollo/`
+  (preview: `cd apollo && kite serve --port 8002`)
 
 ## Dev
 

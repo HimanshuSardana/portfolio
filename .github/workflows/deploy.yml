@@ -27,6 +27,13 @@ jobs:
           mkdir -p ../output/kite
           cp -r output/. ../output/kite/
 
+      - name: Build apollo subsite
+        run: |
+          cd apollo
+          kite build
+          mkdir -p ../output/apollo
+          cp -r output/. ../output/apollo/
+
       - name: Sync output/ to VPS
         uses: burnett01/rsync-deployments@master
         with:
