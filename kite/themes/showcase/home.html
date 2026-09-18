@@ -105,6 +105,16 @@ html[data-vt="theme"]::view-transition-new(root){z-index:2;clip-path:circle(0 at
 html.from-vt .rise{animation:none}
 @keyframes vt-rise{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
 @media (prefers-reduced-motion:reduce){@view-transition{navigation:none}*,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important}html{scroll-behavior:auto}}
+
+/* scroll reveals (below-fold blocks; gated on html.js so no-JS stays visible) */
+html.js .rv{opacity:0;transform:translateY(16px);transition:opacity .6s cubic-bezier(.2,.7,.2,1),transform .6s cubic-bezier(.2,.7,.2,1)}
+html.js .rv.in{opacity:1;transform:none}
+/* docs entrance: fade+rise normally, slide-from-right on back/forward without VT */
+.prose{animation:vt-doc-in .45s cubic-bezier(.2,.7,.2,1) both}
+html.from-vt .prose{animation:none}
+html.traverse .prose{animation:vt-doc-back .4s cubic-bezier(.3,.7,.3,1) both}
+@keyframes vt-doc-in{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+@keyframes vt-doc-back{from{opacity:0;transform:translateX(48px)}to{opacity:1;transform:none}}
 </style>
 </head>
 <body>
@@ -237,9 +247,18 @@ window.addEventListener('pageswap', function(e){
   var nav = (e.activation && e.activation.navigationType) || '';
   if (nav) document.documentElement.dataset.vtNav = nav;
 });
+function markNav(){
+  var root = document.documentElement;
+  if (root.classList.contains('from-vt')) return;
+  try {
+    if (performance.navigation && performance.navigation.type === 2) root.classList.add('traverse');
+  } catch(e) {}
+}
 window.addEventListener('pagereveal', function(e){
   if (e.viewTransition) document.documentElement.classList.add('from-vt');
+  else markNav();
 });
+document.addEventListener('DOMContentLoaded', markNav);
 
 </script>
 
@@ -374,6 +393,23 @@ window.__cmdkSections = [];   // progress: .content page injects its headings
     if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k') { e.preventDefault(); isOpen() ? close() : open(); }
     else if (e.key === 'Escape' && isOpen()) { close(); }
   });
+})();
+</script>
+
+<script>
+// scroll reveals for below-fold blocks
+(function(){
+  var root = document.documentElement;
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  var els = document.querySelectorAll('.sec-label, .feat-list, .cmd-box, .faq, footer.site');
+  if (!els.length || !('IntersectionObserver' in window)) return;
+  root.classList.add('js');
+  var io = new IntersectionObserver(function(entries){
+    entries.forEach(function(en){
+      if (en.isIntersecting) { en.target.classList.add('rv', 'in'); io.unobserve(en.target); }
+    });
+  }, { threshold: 0.1, rootMargin: '0px 0px -6% 0px' });
+  els.forEach(function(el){ el.classList.add('rv'); io.observe(el); });
 })();
 </script>
 </body>

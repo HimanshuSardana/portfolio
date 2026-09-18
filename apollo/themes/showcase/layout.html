@@ -86,6 +86,16 @@ html[data-vt="theme"]::view-transition-new(root){z-index:2;clip-path:circle(0 at
 html.from-vt .rise{animation:none}
 @keyframes vt-rise{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
 @media (prefers-reduced-motion:reduce){@view-transition{navigation:none}*,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important}html{scroll-behavior:auto}}
+
+/* scroll reveals (below-fold blocks; gated on html.js so no-JS stays visible) */
+html.js .rv{opacity:0;transform:translateY(16px);transition:opacity .6s cubic-bezier(.2,.7,.2,1),transform .6s cubic-bezier(.2,.7,.2,1)}
+html.js .rv.in{opacity:1;transform:none}
+/* docs entrance: fade+rise normally, slide-from-right on back/forward without VT */
+.prose{animation:vt-doc-in .45s cubic-bezier(.2,.7,.2,1) backwards}
+html.from-vt .prose{animation:none}
+html.traverse .prose{animation:vt-doc-back .4s cubic-bezier(.3,.7,.3,1) backwards}
+@keyframes vt-doc-in{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+@keyframes vt-doc-back{from{opacity:0;transform:translateX(48px)}to{opacity:1;transform:none}}
 </style>
 </head>
 <body>
@@ -98,14 +108,14 @@ html.from-vt .rise{animation:none}
 </div>
 </div>
 <div class="wrap">
-<main class="prose">
-<a class="back" href="../"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px"><path d="M19 12H5"/><path d="M12 19l-7-7 7-7"/></svg> apollo</a>
-<h1>{{ .Title }}</h1>
 {{ if .TOC }}
 <nav class="toc"><span class="toc-title">On this page</span>
 <ul><span class="toc-ind" id="toc-ind" aria-hidden="true"></span>{{ range .TOC }}<li><a href="#{{ .ID }}">{{ .Text }}</a></li>{{ end }}</ul>
 </nav>
 {{ end }}
+<main class="prose">
+<a class="back" href="../"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px"><path d="M19 12H5"/><path d="M12 19l-7-7 7-7"/></svg> apollo</a>
+<h1>{{ .Title }}</h1>
 {{ .Content }}
 </main>
 <footer><div class="wrap"><span>© {{ .Year }} Himanshu Sardana</span><span>built with kite</span></div></footer>
@@ -153,9 +163,18 @@ window.addEventListener('pageswap', function(e){
   var nav = (e.activation && e.activation.navigationType) || '';
   if (nav) document.documentElement.dataset.vtNav = nav;
 });
+function markNav(){
+  var root = document.documentElement;
+  if (root.classList.contains('from-vt')) return;
+  try {
+    if (performance.navigation && performance.navigation.type === 2) root.classList.add('traverse');
+  } catch(e) {}
+}
 window.addEventListener('pagereveal', function(e){
   if (e.viewTransition) document.documentElement.classList.add('from-vt');
+  else markNav();
 });
+document.addEventListener('DOMContentLoaded', markNav);
 </script>
 <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-core.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/plugins/autoloader/prism-autoloader.min.js" data-autoloader-path="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/"></script>
