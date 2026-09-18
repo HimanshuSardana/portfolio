@@ -1,19 +1,51 @@
-# Caddyfile for the Astro portfolio.
-# Installed to /etc/caddy/Caddyfile by deploy/setup-arch.sh
-# __DOMAIN__ is substituted at install time (default: himanshu.co).
-# Caddy serves the static files and provisions/renews Let's Encrypt certs automatically.
+# Caddyfile for himanshu.co and its project subsites.
+# Installed to /etc/caddy/Caddyfile by deploy/setup-arch.sh, which substitutes
+# __DOMAIN__ (default: himanshu.co) -- so `kite.__DOMAIN__` becomes kite.himanshu.co.
+# Caddy provisions and renews Let's Encrypt certs automatically for every host.
 
 __DOMAIN__, www.__DOMAIN__ {
 	root * /srv/www/portfolio
 	file_server
-
 	encode gzip
 
 	# Static assets: cache hard. HTML: always fresh.
 	header /*.css Cache-Control "public, max-age=31536000, immutable"
 	header /*.html Cache-Control "no-store"
 
+	# The showcase sites used to live at /kite/ and /apollo/ subpaths.
+	# Permanently redirect those (deep links included) to the subdomains.
+	@kiteOld path_regexp ^/kite/?(.*)$
+	redir @kiteOld https://kite.__DOMAIN__/{re.kiteOld.1} 301
+	@apolloOld path_regexp ^/apollo/?(.*)$
+	redir @apolloOld https://apollo.__DOMAIN__/{re.apolloOld.1} 301
+
 	log {
 		output file /var/log/caddy/portfolio.log
+	}
+}
+
+kite.__DOMAIN__ {
+	root * /srv/www/kite
+	file_server
+	encode gzip
+
+	header /*.css Cache-Control "public, max-age=31536000, immutable"
+	header /*.html Cache-Control "no-store"
+
+	log {
+		output file /var/log/caddy/kite.log
+	}
+}
+
+apollo.__DOMAIN__ {
+	root * /srv/www/apollo
+	file_server
+	encode gzip
+
+	header /*.css Cache-Control "public, max-age=31536000, immutable"
+	header /*.html Cache-Control "no-store"
+
+	log {
+		output file /var/log/caddy/apollo.log
 	}
 }

@@ -5,9 +5,32 @@ on:
     branches: [main]
   workflow_dispatch: # manual "Run workflow" button in the Actions tab
 
+concurrency:
+  group: deploy-vps
+  cancel-in-progress: false
+
+env:
+  # Pinned for reproducible deploys. Bump the SHA when you want site builds to
+  # pick up new kite features: git -C kite log -1 --format=%H  (or on GitHub).
+  KITE_VERSION: 8ef0c13803326b60f307e227f850c7cf09bf76ea
+
 jobs:
-  build-and-deploy:
+  deploy:
+    name: ${{ matrix.site.name }}
     runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false   # one site failing shouldn't block the others
+      matrix:
+        site:
+          - name: portfolio
+            workdir: .
+            target: /srv/www/portfolio/
+          - name: kite
+            workdir: kite
+            target: /srv/www/kite/
+          - name: apollo
+            workdir: apollo
+            target: /srv/www/apollo/
     steps:
       - uses: actions/checkout@v4
 
@@ -15,31 +38,19 @@ jobs:
         with:
           go-version: stable
 
-      - name: Build portfolio site with kite
+      - name: Build ${{ matrix.site.name }}
+        working-directory: ${{ matrix.site.workdir }}
         run: |
-          go install github.com/HimanshuSardana/kite@latest
+          go install github.com/HimanshuSardana/kite@$KITE_VERSION
+          export PATH="$PATH:$(go env GOPATH)/bin"
           kite build
 
-      - name: Build kite showcase subsite
-        run: |
-          cd kite
-          kite build
-          mkdir -p ../output/kite
-          cp -r output/. ../output/kite/
-
-      - name: Build apollo subsite
-        run: |
-          cd apollo
-          kite build
-          mkdir -p ../output/apollo
-          cp -r output/. ../output/apollo/
-
-      - name: Sync output/ to VPS
+      - name: Deploy ${{ matrix.site.name }} -> ${{ matrix.site.target }}
         uses: burnett01/rsync-deployments@master
         with:
           switches: -avzr --delete
-          path: output/
-          remote_path: /srv/www/portfolio/
+          path: ${{ matrix.site.workdir }}/output/
+          remote_path: ${{ matrix.site.target }}
           remote_host: ${{ secrets.VPS_HOST }}
           remote_port: ${{ secrets.VPS_PORT }}
           remote_user: ${{ secrets.VPS_USER }}
