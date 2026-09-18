@@ -7,7 +7,10 @@
 <title>{{ .Title }} — Himanshu Sardana</title>
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>λ</text></svg>" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin />
+<link href="https://cdn.jsdelivr.net/npm/@fontsource/iosevka@latest/400.css" rel="stylesheet" />
+<link href="https://cdn.jsdelivr.net/npm/@fontsource/iosevka@latest/500.css" rel="stylesheet" />
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
 body{background:#0a0a0a;color:#d4d4d8;font-family:'Inter',system-ui,sans-serif;line-height:1.7;font-size:.95rem;-webkit-font-smoothing:antialiased}
@@ -28,7 +31,16 @@ header.top nav{display:flex;gap:1.25rem}
 .prose li{margin:.3em 0}
 .prose a{color:#f5f5f5}
 .prose pre{background:#111;border:1px solid #262626;border-radius:8px;padding:1rem;overflow:auto;font-size:.82rem;line-height:1.6}
-.prose code{font-family:'JetBrains Mono',ui-monospace,monospace;font-size:.87em}
+.prose code{font-family:'Iosevka',ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.92em}
+/* syntax highlighting (prism) */
+code[class*=language-]{font-family:'Iosevka',ui-monospace,Menlo,monospace}
+.token.comment,.token.prolog,.token.cdata{color:#737373;font-style:italic}
+.token.keyword,.token.tag,.token.selector,.token.attr-name,.token.builtin{color:#fff}
+.token.string,.token.char,.token.attr-value,.token.regex{color:#a3e635}
+.token.function,.token.class-name{color:#ededed}
+.token.number,.token.boolean,.token.constant{color:#d4d4d8}
+.token.operator,.token.punctuation{color:#737373}
+.token.important,.token.bold{font-weight:700}
 .prose :not(pre)>code{background:#1a1a1a;padding:.15em .4em;border-radius:6px;color:#f5f5f5}
 .toc{background:#111;border:1px solid #262626;border-radius:8px;padding:1rem 1.25rem;margin:0 0 2rem}
 .toc-title{font-size:.7rem;letter-spacing:.14em;text-transform:uppercase;color:#737373;display:block;margin-bottom:.5rem}
@@ -64,5 +76,7 @@ footer.site .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:
 <span>© {{ .Year }} Himanshu Sardana</span>
 <span>built with kite</span>
 </div></footer>
+<script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-core.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/plugins/autoloader/prism-autoloader.min.js" data-autoloader-path="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/"></script>
 </body>
 </html>
