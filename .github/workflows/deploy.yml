@@ -15,10 +15,17 @@ jobs:
         with:
           go-version: stable
 
-      - name: Build site with kite
+      - name: Build portfolio site with kite
         run: |
           go install github.com/HimanshuSardana/kite@latest
           kite build
+
+      - name: Build kite showcase subsite
+        run: |
+          cd kite
+          kite build
+          mkdir -p ../output/kite
+          cp -r output/. ../output/kite/
 
       - name: Sync output/ to VPS
         uses: burnett01/rsync-deployments@master

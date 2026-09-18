@@ -8,6 +8,9 @@ My own Go static site generator. Projects curated from https://github.com/Himans
 - `content/*.md` — blog posts (frontmatter: `title`, `date: YYYY-MM-DD`, `tags`)
 - `themes/portfolio/` — custom theme (`home.html` single page + `layout.html` post pages)
 - `output/` — generated site (gitignored, built by CI)
+- `kite/` — standalone showcase subsite for kite itself (own `config.yaml`,
+  `content/`, `themes/`). Built with kite, deployed to `/kite/`:
+  `cd kite && kite build` (preview: `kite serve --port 8001`)
 
 ## Dev
 

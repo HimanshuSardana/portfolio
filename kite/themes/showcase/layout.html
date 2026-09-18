@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="description" content="{{ .Title }} — kite docs" />
+<title>{{ .Title }} — kite</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🪁</text></svg>" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<style>
+:root{--bg:#0a0a0a;--surface:#111113;--border:#26262b;--text:#f5f5f5;--muted:#d4d4d8;--dim:#8a8a93;--accent:#a3e635;--mono:'JetBrains Mono',ui-monospace,monospace}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--muted);font-family:'Inter',system-ui,sans-serif;line-height:1.7;font-size:.95rem;-webkit-font-smoothing:antialiased}
+a{color:inherit}
+::selection{background:var(--accent);color:#0a0a0a}
+.wrap{max-width:720px;margin:0 auto;padding:0 1.5rem}
+header.top{display:flex;align-items:center;justify-content:space-between;padding:1rem 0;font-size:.87rem;border-bottom:1px solid var(--border)}
+header.top a{color:var(--dim);text-decoration:none}
+header.top a:hover{color:var(--text)}
+.brand{font-weight:800;color:var(--text) !important}
+.brand span{color:var(--accent)}
+.prose{padding:2.5rem 0}
+.back{font-size:.82rem;color:var(--dim);text-decoration:none;font-family:var(--mono)}
+.back:hover{color:var(--accent)}
+.prose h1{color:var(--text);font-size:2rem;letter-spacing:-.03em;margin:.75rem 0 1.5rem;line-height:1.2;font-weight:800}
+.prose h2{color:var(--text);font-size:1.25rem;margin:2em 0 .5em;letter-spacing:-.02em}
+.prose p{margin:.9em 0}
+.prose ul,.prose ol{margin:.8em 0 .8em 1.4em}
+.prose li{margin:.3em 0}
+.prose a{color:var(--accent)}
+.prose table{width:100%;border-collapse:collapse;margin:1.2em 0;font-size:.85rem}
+.prose th,.prose td{border:1px solid var(--border);padding:.55rem .8rem;text-align:left}
+.prose th{color:var(--text);background:var(--surface)}
+.prose code{font-family:var(--mono);font-size:.85em}
+.prose :not(pre)>code{background:#1a1d12;color:var(--accent);padding:.15em .4em;border-radius:6px}
+.prose pre{background:#0d0d0f;border:1px solid var(--border);border-radius:12px;padding:1.1rem 1.2rem;overflow:auto;font-size:.82rem;line-height:1.75;margin:1.2em 0}
+.prose blockquote{border-left:2px solid var(--accent);padding:.2rem 0 .2rem 1.1rem;margin:1.4em 0;color:var(--text)}
+.toc{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:1rem 1.25rem;margin:0 0 2rem}
+.toc-title{font-family:var(--mono);font-size:.68rem;letter-spacing:.12em;text-transform:uppercase;color:var(--dim);display:block;margin-bottom:.5rem}
+.toc ul{list-style:none;margin:0}
+.toc li{margin:.25rem 0}
+.toc a{font-size:.83rem;color:var(--dim);text-decoration:none}
+.toc a:hover{color:var(--accent)}
+footer{border-top:1px solid var(--border);padding:1.5rem 0 2.5rem;font-family:var(--mono);font-size:.75rem;color:var(--dim)}
+footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:.5rem}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header class="top">
+<a class="brand" href="../">🪁 <span>kite</span></a>
+<a href="https://github.com/HimanshuSardana/kite" target="_blank" rel="noreferrer">GitHub ↗</a>
+</header>
+<main class="prose">
+<a class="back" href="../">← all docs</a>
+<h1>{{ .Title }}</h1>
+{{ if .TOC }}
+<nav class="toc"><span class="toc-title">On this page</span>
+<ul>{{ range .TOC }}<li><a href="#{{ .ID }}">{{ .Text }}</a></li>{{ end }}</ul>
+</nav>
+{{ end }}
+{{ .Content }}
+</main>
+</div>
+<footer><div class="wrap"><span>© {{ .Year }} Himanshu Sardana</span><span>built with kite 🪁</span></div></footer>
+</body>
+</html>
