@@ -11,19 +11,20 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-go@v5
         with:
-          node-version: 22
-          cache: npm
+          go-version: stable
 
-      - run: npm ci
-      - run: npm run build # -> dist/
+      - name: Build site with kite
+        run: |
+          go install github.com/HimanshuSardana/kite@latest
+          kite build
 
-      - name: Sync dist/ to VPS
+      - name: Sync output/ to VPS
         uses: burnett01/rsync-deployments@master
         with:
           switches: -avzr --delete
-          path: dist/
+          path: output/
           remote_path: /srv/www/portfolio/
           remote_host: ${{ secrets.VPS_HOST }}
           remote_port: ${{ secrets.VPS_PORT }}

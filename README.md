@@ -1,19 +1,25 @@
-# himanshu.co — portfolio + blog (Astro)
+# himanshu.co — portfolio + blog, built with [kite](https://github.com/HimanshuSardana/kite)
 
-Static Astro site. Projects curated from https://github.com/HimanshuSardana.
+My own Go static site generator. Projects curated from https://github.com/HimanshuSardana.
+
+## Layout
+
+- `config.yaml` — site title, author, theme
+- `content/*.md` — blog posts (frontmatter: `title`, `date: YYYY-MM-DD`, `tags`)
+- `themes/portfolio/` — custom theme (`home.html` single page + `layout.html` post pages)
+- `output/` — generated site (gitignored, built by CI)
 
 ## Dev
 
 ```bash
-npm install
-npm run dev      # http://localhost:4321
-npm run build    # -> dist/
-npm run preview
+go install github.com/HimanshuSardana/kite@latest
+kite serve            # http://localhost:8000 with live reload
+kite build            # -> output/
 ```
 
 ## Self-hosting on an Arch Linux VPS (Caddy)
 
-Every push to `main` builds the site and rsyncs `dist/` to `/srv/www/portfolio` on your VPS via GitHub Actions. Caddy serves the files and handles HTTPS (Let's Encrypt) automatically.
+Every push to `main` builds the site with kite and rsyncs `output/` to `/srv/www/portfolio` on your VPS via GitHub Actions. Caddy serves the files and handles HTTPS (Let's Encrypt) automatically.
 
 ### 1. One-time server setup (on the VPS, as root)
 
@@ -60,8 +66,8 @@ trigger it manually from the Actions tab (workflow_dispatch).
 ### Manual deploy (no CI)
 
 ```bash
-npm run build
-rsync -avz --delete dist/ user@your-vps:/srv/www/portfolio/
+kite build
+rsync -avz --delete output/ user@your-vps:/srv/www/portfolio/
 ```
 
 Check Caddy is happy: `systemctl status caddy`, `journalctl -u caddy -e`,

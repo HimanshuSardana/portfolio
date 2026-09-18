@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="description" content="{{ .AuthorName }} — {{ .AuthorRole }}. {{ .AuthorBio }}" />
+<title>{{ .SiteTitle }}</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>λ</text></svg>" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:#0a0a0a;color:#a3a3a3;font-family:'Inter',system-ui,-apple-system,sans-serif;line-height:1.7;font-size:.95rem;-webkit-font-smoothing:antialiased}
+a{color:inherit}
+::selection{background:#f5f5f5;color:#0a0a0a}
+.wrap{max-width:700px;margin:0 auto;padding:0 1.25rem}
+header.top{display:flex;align-items:center;justify-content:space-between;padding:1.5rem 0;font-size:.85rem}
+header.top a{text-decoration:none;transition:color .2s}
+header.top a:hover{color:#f5f5f5}
+header.top nav{display:flex;gap:1.25rem}
+.hero{padding:2.5rem 0 1rem}
+.hero h1{color:#f5f5f5;font-size:1.9rem;font-weight:600;letter-spacing:-.02em;margin-bottom:1.25rem}
+.hero p{margin-bottom:1rem}
+.hero strong{color:#f5f5f5;font-weight:600}
+.socials{display:flex;align-items:center;gap:.6rem;font-size:.85rem;margin-top:1.25rem}
+.socials a{text-decoration:none;cursor:pointer}
+.socials a:hover{color:#f5f5f5}
+.socials .sep{color:#525252}
+section.block{padding:1.75rem 0}
+.block-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:1.25rem}
+.block-head h2{color:#f5f5f5;font-size:1.05rem;font-weight:600}
+.block-head span{font-size:.82rem;color:#737373}
+.post-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+@media(max-width:560px){.post-grid{grid-template-columns:1fr}}
+.post-card{display:flex;flex-direction:column;gap:.5rem;border:1px solid #404040;border-radius:8px;padding:1rem;text-decoration:none;transition:all .3s;cursor:pointer}
+.post-card:hover{transform:translateY(-8px);border-color:#a3a3a3}
+.post-card h3{color:#f5f5f5;font-size:.95rem;font-weight:600;line-height:1.4}
+.post-card time{font-size:.75rem;color:#737373}
+.post-card p{font-size:.83rem;line-height:1.6}
+.proj-list{display:flex;flex-direction:column;gap:1rem}
+.proj-row{display:flex;width:100%;flex-direction:column;justify-content:space-between;gap:.35rem;border:1px solid #404040;border-radius:8px;padding:1rem;text-decoration:none;transition:all .3s;cursor:pointer}
+@media(min-width:640px){.proj-row{flex-direction:row;align-items:center}}
+.proj-row:hover{transform:translateY(-8px);border-color:#a3a3a3}
+.proj-row h3{color:#f5f5f5;font-size:.95rem;font-weight:600}
+.proj-row h3 span{color:#737373;font-weight:400}
+.proj-row .meta{font-size:.8rem;color:#737373;white-space:nowrap}
+.proj-row p{font-size:.83rem}
+.contact{padding:2rem 0 1rem}
+.contact h2{color:#f5f5f5;font-size:1.05rem;font-weight:600;margin-bottom:.75rem}
+.contact a.mail:hover{color:#f5f5f5}
+footer.site{border-top:1px solid #262626;margin-top:1rem;padding:1.25rem 0 2.5rem;font-size:.8rem;color:#737373}
+footer.site .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:.5rem}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header class="top">
+<a href="https://github.com/HimanshuSardana">github.com/HimanshuSardana</a>
+<nav><a href="/">Home</a><a href="#projects">Projects</a><a href="#writing">Posts</a></nav>
+</header>
+
+<div class="hero">
+<h1>Hi, I'm Himanshu 👋</h1>
+<p>Hello, I'm a <strong>developer</strong> who lives in the terminal. I work with <strong>Go, Python &amp; TypeScript</strong> — TUIs, static site generators, devtools and systems projects. This site is built with my own SSG, <strong><a href="https://github.com/HimanshuSardana/kite" style="color:#f5f5f5">kite</a></strong>.</p>
+<div class="socials">
+<a href="https://github.com/HimanshuSardana" target="_blank" rel="noreferrer">Github</a><span class="sep">/</span>
+<a href="https://himanshu.co" target="_blank" rel="noreferrer">Website</a><span class="sep">/</span>
+<a href="/feed.xml">RSS</a>
+</div>
+</div>
+
+<section class="block" id="writing">
+<div class="block-head"><h2>Latest posts</h2><span>{{ len .Posts }} posts</span></div>
+{{ if .Posts }}
+<div class="post-grid">
+{{ range .Posts }}
+<a class="post-card" href="/{{ .Slug }}/">
+<h3>{{ .Title }}</h3>
+<time>{{ .Date }}</time>
+</a>
+{{ end }}
+</div>
+{{ else }}
+<p>No posts yet.</p>
+{{ end }}
+</section>
+
+<section class="block" id="projects">
+<div class="block-head"><h2>Selected projects</h2><span><a href="https://github.com/HimanshuSardana?tab=repositories" target="_blank" rel="noreferrer" style="text-decoration:underline;text-decoration-style:dashed;text-underline-offset:6px">100+ on GitHub →</a></span></div>
+<div class="proj-list">
+<a class="proj-row" href="https://github.com/HimanshuSardana/manga-tui" target="_blank" rel="noreferrer"><div><h3>manga-tui <span>· Go</span></h3><p>A TUI manga reader written in Go.</p></div><span class="meta">tui • bubbletea</span></a>
+<a class="proj-row" href="https://github.com/HimanshuSardana/camus" target="_blank" rel="noreferrer"><div><h3>camus <span>· Go</span></h3><p>A minimal Apache Kafka clone written in Go.</p></div><span class="meta">kafka • distributed-systems</span></a>
+<a class="proj-row" href="https://github.com/HimanshuSardana/kite" target="_blank" rel="noreferrer"><div><h3>kite <span>· Go</span></h3><p>A minimal and blazingly fast static site generator. Powers this site.</p></div><span class="meta">ssg • cli</span></a>
+<a class="proj-row" href="https://github.com/HimanshuSardana/bonsai" target="_blank" rel="noreferrer"><div><h3>bonsai <span>· Go</span></h3><p>Minimal Git frontend served via a Go SSG.</p></div><span class="meta">git • frontend</span></a>
+<a class="proj-row" href="https://github.com/HimanshuSardana/cpos" target="_blank" rel="noreferrer"><div><h3>cpos <span>· TypeScript</span></h3><p>Capture Codeforces &amp; CSES problems, run tests and submit from VS Code or the terminal.</p></div><span class="meta">vscode • cp</span></a>
+<a class="proj-row" href="https://github.com/HimanshuSardana/rss-reader" target="_blank" rel="noreferrer"><div><h3>rss-reader <span>· Svelte</span></h3><p>Three-pane desktop RSS reader (Tauri v2 + Svelte) with sqlite + full-text extraction.</p></div><span class="meta">tauri • rss</span></a>
+<a class="proj-row" href="https://github.com/HimanshuSardana/vectra" target="_blank" rel="noreferrer"><div><h3>vectra <span>· Python</span></h3><p>A TUI wrapper over ChromaDB.</p></div><span class="meta">tui • rag</span></a>
+<a class="proj-row" href="https://github.com/HimanshuSardana/flashkv" target="_blank" rel="noreferrer"><div><h3>flashkv <span>· Go</span></h3><p>A fast persistent key-value store in Go.</p></div><span class="meta">database • kv-store</span></a>
+<a class="proj-row" href="https://github.com/HimanshuSardana/tiet-notegen" target="_blank" rel="noreferrer"><div><h3>tiet-notegen <span>· Python</span></h3><p>Scrapes Thapar's paper archive, classifies questions into topics with Gemini.</p></div><span class="meta">gemini • edtech</span></a>
+<a class="proj-row" href="https://github.com/HimanshuSardana/groq.nvim" target="_blank" rel="noreferrer"><div><h3>groq.nvim <span>· Python</span></h3><p>Neovim plugin for code generation + explanation via the Groq API.</p></div><span class="meta">neovim • llm</span></a>
+<a class="proj-row" href="https://github.com/HimanshuSardana/chessalyze" target="_blank" rel="noreferrer"><div><h3>chessalyze <span>· TypeScript</span></h3><p>Improve my chess, similar to Lichess studies.</p></div><span class="meta">chess • lichess</span></a>
+<a class="proj-row" href="https://github.com/HimanshuSardana/ppt-gen" target="_blank" rel="noreferrer"><div><h3>ppt-gen <span>· Go</span></h3><p>Too lazy to make PPTs — generate them programmatically.</p></div><span class="meta">automation • cli</span></a>
+</div>
+</section>
+
+<div class="contact">
+<h2>Get in touch</h2>
+<p>Ping me on <a class="mail" href="https://github.com/HimanshuSardana">GitHub @HimanshuSardana</a> or follow me via my social links.</p>
+<div class="socials">
+<a href="https://github.com/HimanshuSardana" target="_blank" rel="noreferrer">Github</a><span class="sep">/</span>
+<a href="https://himanshu.co" target="_blank" rel="noreferrer">Website</a><span class="sep">/</span>
+<a href="/feed.xml">RSS</a>
+</div>
+</div>
+</div>
+<footer class="site"><div class="wrap">
+<span>© {{ .Year }} {{ .AuthorName }}</span>
+<span>built with kite · arch btw</span>
+</div></footer>
+</body>
+</html>

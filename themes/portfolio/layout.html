@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="description" content="{{ .Title }}" />
+<title>{{ .Title }} — Himanshu Sardana</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>λ</text></svg>" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:#0a0a0a;color:#d4d4d8;font-family:'Inter',system-ui,sans-serif;line-height:1.7;font-size:.95rem;-webkit-font-smoothing:antialiased}
+a{color:inherit}
+::selection{background:#f5f5f5;color:#0a0a0a}
+.wrap{max-width:700px;margin:0 auto;padding:0 1.25rem}
+header.top{display:flex;align-items:center;justify-content:space-between;padding:1.5rem 0;font-size:.85rem}
+header.top a{color:#a3a3a3;text-decoration:none}
+header.top a:hover{color:#f5f5f5}
+header.top nav{display:flex;gap:1.25rem}
+.back{font-size:.85rem;color:#a3a3a3;text-decoration:underline;text-decoration-style:dashed;text-underline-offset:6px}
+.back:hover{color:#f5f5f5}
+.prose{padding:2rem 0}
+.prose h1{color:#f5f5f5;font-size:1.7rem;letter-spacing:-.02em;margin:.75rem 0 1.5rem;line-height:1.25}
+.prose h2{color:#f5f5f5;font-size:1.15rem;margin:1.75em 0 .5em}
+.prose p{margin:.9em 0;color:#d4d4d8}
+.prose ul,.prose ol{margin:.8em 0 .8em 1.4em}
+.prose li{margin:.3em 0}
+.prose a{color:#f5f5f5}
+.prose pre{background:#111;border:1px solid #262626;border-radius:8px;padding:1rem;overflow:auto;font-size:.82rem;line-height:1.6}
+.prose code{font-family:'JetBrains Mono',ui-monospace,monospace;font-size:.87em}
+.prose :not(pre)>code{background:#1a1a1a;padding:.15em .4em;border-radius:6px;color:#f5f5f5}
+.toc{background:#111;border:1px solid #262626;border-radius:8px;padding:1rem 1.25rem;margin:0 0 2rem}
+.toc-title{font-size:.7rem;letter-spacing:.14em;text-transform:uppercase;color:#737373;display:block;margin-bottom:.5rem}
+.toc ul{list-style:none;margin:0}
+.toc li{margin:.2rem 0}
+.toc a{font-size:.82rem;color:#a3a3a3;text-decoration:none}
+.toc a:hover{color:#f5f5f5}
+footer.site{border-top:1px solid #262626;margin-top:1rem;padding:1.25rem 0 2.5rem;font-size:.8rem;color:#737373}
+footer.site .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:.5rem}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header class="top">
+<a href="https://github.com/HimanshuSardana">github.com/HimanshuSardana</a>
+<nav><a href="/">Home</a><a href="/#projects">Projects</a><a href="/#writing">Posts</a></nav>
+</header>
+<main class="prose">
+<a class="back" href="/">← home</a>
+<h1>{{ .Title }}</h1>
+{{ if .TOC }}
+<nav class="toc" aria-label="Contents">
+<span class="toc-title">Contents</span>
+<ul>
+{{ range .TOC }}<li><a href="#{{ .ID }}">{{ .Text }}</a></li>{{ end }}
+</ul>
+</nav>
+{{ end }}
+{{ .Content }}
+</main>
+</div>
+<footer class="site"><div class="wrap">
+<span>© {{ .Year }} Himanshu Sardana</span>
+<span>built with kite</span>
+</div></footer>
+</body>
+</html>
