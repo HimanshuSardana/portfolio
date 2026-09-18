@@ -1,57 +1,41 @@
 ---
 import Base from "../layouts/Base.astro";
 import { projects, posts } from "../data/site";
-const featured = projects.filter(p => p.featured);
+const selected = projects.filter(p => p.featured);
 ---
-<Base title="Himanshu Sardana — developer">
+<Base title="Himanshu Sardana">
 <div class="hero">
-<p class="kicker">$ whoami</p>
-<h1>Hi, I'm Himanshu.<br /><span class="grad">I build fast tools for the terminal & web.</span></h1>
-<p class="lead">Sub-optimal Arch user. I work in Go, Python & TypeScript — TUIs, static site generators, Kafka clones, Neovim plugins and competitive-programming tooling. 100+ repos on GitHub.</p>
-<div class="btn-row">
-<a class="btn btn-primary" href="/projects">View projects →</a>
-<a class="btn btn-ghost" href="https://github.com/HimanshuSardana">GitHub</a>
-<a class="btn btn-ghost" href="/blog">Read blog</a>
-</div>
-<div class="stats">
-<div class="stat"><b>100+</b><span>public repos</span></div>
-<div class="stat"><b>Go · Py · TS</b><span>daily drivers</span></div>
-<div class="stat"><b>i3 / hyprland</b><span>arch btw</span></div>
+<h1>Hi, I'm Himanshu 👋</h1>
+<p>Hello, I'm a <strong>developer</strong> who lives in the terminal with over <strong>{new Date().getFullYear() - 2019} years</strong> of building things. I am currently working with <strong>Go and TypeScript</strong>. Outside of work I rice my Arch setup and read manga in the terminal.</p>
+<div class="socials">
+<a href="https://github.com/HimanshuSardana" target="_blank" rel="noreferrer">Github</a><span class="sep">/</span>
+<a href="https://himanshu.co" target="_blank" rel="noreferrer">Website</a><span class="sep">/</span>
+<a href="/about">About</a>
 </div>
 </div>
 
-<section>
-<div class="sec-head"><h2>★ Featured projects</h2><a href="/projects">all →</a></div>
-<div class="grid">
-{featured.map(p => (
-<a class="card" href={p.url} target="_blank" rel="noopener">
-<div class="card-top"><span><span class="lang-dot"></span>{p.language}</span><span>↗</span></div>
-<h3>{p.name}</h3><p>{p.description}</p>
-<div class="tags">{p.tags.map(t => <span class="tag">{t}</span>)}</div>
+<section class="block">
+<div class="block-head"><h2>Latest posts</h2><a href="/posts">See all posts</a></div>
+<div class="post-grid">
+{posts.slice(0,2).map(p => (
+<a class="post-card" href={`/posts/${p.slug}`}>
+<h3>{p.title}</h3>
+<time>{p.date.split("-").reverse().join("/")}</time>
+<p>{p.excerpt}</p>
 </a>
 ))}
 </div>
 </section>
 
-<section>
-<div class="sec-head"><h2>✎ Latest posts</h2><a href="/blog">all →</a></div>
-<div class="post-list">
-{posts.slice(0,3).map(p => (
-<a class="post-row" href={`/blog/${p.slug}`}>
-<div><h3>{p.title}</h3><p>{p.excerpt}</p></div>
-<span class="date">{p.date}</span>
+<section class="block">
+<div class="block-head"><h2>Selected projects ({selected.length})</h2><a href="/projects">See all</a></div>
+<div class="proj-list">
+{selected.map(p => (
+<a class="proj-row" href={p.url} target="_blank" rel="noreferrer">
+<div><h3>{p.name}</h3><p>{p.description}</p></div>
+<span class="meta">{p.tags.slice(0,3).join(" • ")}</span>
 </a>
 ))}
-</div>
-</section>
-
-<section>
-<div class="sec-head"><h2>▚ Stack</h2></div>
-<div class="skills">
-{["Go","Python","TypeScript","Svelte","Tauri","Neovim","Astro","SQLite","ChromaDB","Kafka","Arch Linux","Hyprland"].map(s => <span class="tag">{s}</span>)}
-</div>
-<div class="about-box">
-<p style="color:var(--muted);font-size:.95rem">Currently hacking on <b style="color:var(--text)">camus</b> (Kafka in Go) and <b style="color:var(--text)">rss-reader</b> (Tauri + Svelte). Open to internships, freelance & collabs — <a href="https://github.com/HimanshuSardana" style="color:var(--accent)">ping me on GitHub</a>.</p>
 </div>
 </section>
 </Base>

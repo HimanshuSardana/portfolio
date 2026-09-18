@@ -2,19 +2,17 @@
 import Base from "../layouts/Base.astro";
 import { projects } from "../data/site";
 ---
-<Base title="Projects — Himanshu Sardana" description="Open-source projects by Himanshu Sardana.">
-<section>
-<p class="kicker">~/projects</p>
+<Base title="Projects — Himanshu Sardana" description="Selected open-source projects by Himanshu Sardana.">
+<div class="hero">
 <h1>Projects</h1>
-<p class="lead">A curated slice of my <a href="https://github.com/HimanshuSardana" style="color:var(--accent)">100+ GitHub repos</a> — systems, TUIs, devtools & web.</p>
-</section>
-<section style="padding-top:0">
-<div class="grid">
+<p>A curated slice of my <strong><a href="https://github.com/HimanshuSardana" style="color:#f5f5f5">100+ GitHub repos</a></strong> — systems, TUIs, devtools & web.</p>
+</div>
+<section class="block" style="padding-top:0">
+<div class="proj-list">
 {projects.map(p => (
-<a class="card" href={p.url} target="_blank" rel="noopener">
-<div class="card-top"><span><span class="lang-dot"></span>{p.language}</span><span>↗</span></div>
-<h3>{p.name}</h3><p>{p.description}</p>
-<div class="tags">{p.tags.map(t => <span class="tag">{t}</span>)}</div>
+<a class="proj-row" href={p.url} target="_blank" rel="noreferrer">
+<div><h3>{p.name} <span>· {p.language}</span></h3><p>{p.description}</p></div>
+<span class="meta">{p.tags.slice(0,3).join(" • ")}</span>
 </a>
 ))}
 </div>
