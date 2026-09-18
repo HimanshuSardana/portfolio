@@ -1,0 +1,15 @@
+---
+import Base from "../../layouts/Base.astro";
+---
+<Base title="Why I built a manga reader for the terminal">
+<section class="prose">
+<p class="kicker">2025-03-02 · go · tui</p>
+<h1>Why I built a manga reader for the terminal</h1>
+<p>I live in the terminal, so context-switching to a browser to read manga felt wrong. <a href="https://github.com/HimanshuSardana/manga-tui">manga-tui</a> is a Bubbletea-based reader: search, track library, cache chapters, read offline.</p>
+<h2>Stack</h2>
+<ul><li><b>Bubbletea + Lipgloss</b> for the TUI</li><li>SQLite for library + progress</li><li>Image rendering via sixel/kitty graphics with ASCII fallback</li></ul>
+<h2>Hard parts</h2>
+<ul><li>Image protocols differ per terminal — detect and degrade gracefully.</li><li>Caching aggressively so re-reads are instant.</li><li>Keybindings that don't fight vim muscle memory.</li></ul>
+<p>Repo: <a href="https://github.com/HimanshuSardana/manga-tui">github.com/HimanshuSardana/manga-tui</a></p>
+</section>
+</Base>

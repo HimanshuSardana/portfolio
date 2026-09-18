@@ -1,0 +1,18 @@
+---
+import Base from "../layouts/Base.astro";
+---
+<Base title="About — Himanshu Sardana">
+<section>
+<p class="kicker">~/about</p>
+<h1>About</h1>
+<p class="lead">I'm Himanshu Sardana — a developer who lives in the terminal. Arch (i3 / Hyprland), Neovim, and a mild obsession with fast, minimal software.</p>
+<div class="about-box prose">
+<p>I build <b>developer tools and systems projects</b>: a Kafka clone in Go (<a href="https://github.com/HimanshuSardana/camus">camus</a>), a TUI manga reader (<a href="https://github.com/HimanshuSardana/manga-tui">manga-tui</a>), a static site generator (<a href="https://github.com/HimanshuSardana/kite">kite</a>), a minimal git frontend (<a href="https://github.com/HimanshuSardana/bonsai">bonsai</a>), and competitive-programming tooling (<a href="https://github.com/HimanshuSardana/cpos">cpos</a>).</p>
+<p>Day to day: <b>Go, Python, TypeScript/Svelte</b>. Also comfortable with Tauri, SQLite, ChromaDB, and LLM APIs (Groq, Gemini).</p>
+<p>Find me on <a href="https://github.com/HimanshuSardana">GitHub @HimanshuSardana</a> · blog at <a href="https://himanshu.co">himanshu.co</a>.</p>
+</div>
+<div class="skills">
+{["Go","Python","TypeScript","Svelte","Tauri","Bubbletea","Astro","SQLite","ChromaDB","Kafka","Lua","Arch Linux"].map(s => <span class="tag">{s}</span>)}
+</div>
+</section>
+</Base>

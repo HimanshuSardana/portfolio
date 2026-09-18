@@ -1,0 +1,15 @@
+---
+import Base from "../../layouts/Base.astro";
+---
+<Base title="Writing a static site generator in Go">
+<section class="prose">
+<p class="kicker">2024-08-11 · go · ssg</p>
+<h1>Writing a static site generator in Go</h1>
+<p><a href="https://github.com/HimanshuSardana/kite">kite</a> is my minimal, blazingly fast SSG: Markdown in, HTML out. No JS bundler, no 900 deps.</p>
+<h2>Design</h2>
+<ul><li>Frontmatter + Markdown → <code>html/template</code></li><li>Incremental rebuilds via mtime cache</li><li>Single binary, <code>kite build</code> and <code>kite serve</code></li></ul>
+<pre><code>$ kite build
+✓ 42 pages in 18ms</code></pre>
+<p>It also powers <a href="https://github.com/HimanshuSardana/bonsai">bonsai</a>, my minimal git frontend. This portfolio itself is Astro — right tool per job.</p>
+</section>
+</Base>

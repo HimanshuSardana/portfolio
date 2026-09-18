@@ -1,0 +1,20 @@
+---
+import Base from "../../layouts/Base.astro";
+---
+<Base title="Building a minimal Kafka clone in Go">
+<section class="prose">
+<p class="kicker">2025-06-14 · go · kafka</p>
+<h1>Building a minimal Kafka clone in Go</h1>
+<p>For <a href="https://github.com/HimanshuSardana/camus">camus</a> I wanted to actually understand Kafka, not just use it. So I re-implemented the core: topics, partitions, an append-only log, and consumer groups.</p>
+<h2>What I built</h2>
+<ul><li>Partitioned append-only log with segment files</li><li>Simple TCP wire protocol for produce / fetch</li><li>Consumer-group coordination with offset commits</li></ul>
+<h2>Lessons</h2>
+<ul><li><b>Batching is everything</b> — fsync per message kills throughput; group commit saves you.</li><li><b>Offsets are just integers</b> — most of Kafka's magic is bookkeeping done well.</li><li>Go's <code>net</code> + goroutines make the broker surprisingly compact (~1k LOC for the core).</li></ul>
+<pre><code>// sketch: append to partition log
+func Append(batch []Record) (int64, error) &#123;
+  // lock, encode, fsync in batches
+  return baseOffset, nil
+&#125;</code></pre>
+<p>Repo: <a href="https://github.com/HimanshuSardana/camus">github.com/HimanshuSardana/camus</a></p>
+</section>
+</Base>
