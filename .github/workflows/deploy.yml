@@ -1,57 +1,62 @@
-name: Deploy to VPS
+name: Deploy portfolio website
 
 on:
   push:
     branches: [main]
-  workflow_dispatch: # manual "Run workflow" button in the Actions tab
+    paths:
+      - "content/**"
+      - "themes/**"
+      - "static/**"
+      - "config.yaml"
+      - ".github/workflows/deploy.yml"
+  workflow_dispatch:
 
+# Only one deploy at a time; a newer push wins.
 concurrency:
-  group: deploy-vps
-  cancel-in-progress: false
+  group: deploy-portfolio-website
+  cancel-in-progress: true
 
-env:
-  # Pinned for reproducible deploys. Bump the SHA when you want site builds to
-  # pick up new kite features: git -C kite log -1 --format=%H  (or on GitHub).
-  KITE_VERSION: 8ef0c13803326b60f307e227f850c7cf09bf76ea
+permissions:
+  contents: read
 
 jobs:
   deploy:
-    name: ${{ matrix.site.name }}
     runs-on: ubuntu-latest
-    strategy:
-      fail-fast: false   # one site failing shouldn't block the others
-      matrix:
-        site:
-          - name: portfolio
-            workdir: .
-            target: /srv/www/portfolio/
-          - name: kite
-            workdir: kite
-            target: /srv/www/kite/
-          - name: apollo
-            workdir: apollo
-            target: /srv/www/apollo/
+    env:
+      SSH_HOST: ${{ secrets.SSH_HOST }}
+      SSH_USER: ${{ secrets.SSH_USER }}
+      SSH_PORT: ${{ secrets.SSH_PORT }}
+      DEPLOY_PATH: ${{ secrets.DEPLOY_PATH }}
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout
+        uses: actions/checkout@v4
 
-      - uses: actions/setup-go@v5
+      - name: Set up Go
+        uses: actions/setup-go@v5
         with:
-          go-version: stable
+          go-version: "1.25"
 
-      - name: Build ${{ matrix.site.name }}
-        working-directory: ${{ matrix.site.workdir }}
+      - name: Install kite
+        run: go install github.com/HimanshuSardana/kite@latest
+
+      - name: Build site
+        run: "$(go env GOPATH)/bin/kite build"
+
+      - name: Configure SSH
+        env:
+          SSH_DEPLOY_KEY: ${{ secrets.SSH_DEPLOY_KEY }}
         run: |
-          go install github.com/HimanshuSardana/kite@$KITE_VERSION
-          export PATH="$PATH:$(go env GOPATH)/bin"
-          kite build
+          set -euo pipefail
+          mkdir -p ~/.ssh
+          chmod 700 ~/.ssh
+          printf '%s\n' "$SSH_DEPLOY_KEY" > ~/.ssh/deploy_key
+          chmod 600 ~/.ssh/deploy_key
+          ssh-keyscan -p "${SSH_PORT:-22}" -H "$SSH_HOST" >> ~/.ssh/known_hosts 2>/dev/null
+          chmod 600 ~/.ssh/known_hosts
 
-      - name: Deploy ${{ matrix.site.name }} -> ${{ matrix.site.target }}
-        uses: burnett01/rsync-deployments@master
-        with:
-          switches: -avzr --delete
-          path: ${{ matrix.site.workdir }}/output/
-          remote_path: ${{ matrix.site.target }}
-          remote_host: ${{ secrets.VPS_HOST }}
-          remote_port: ${{ secrets.VPS_PORT }}
-          remote_user: ${{ secrets.VPS_USER }}
-          remote_key: ${{ secrets.VPS_SSH_KEY }}
+      - name: Deploy with rsync
+        run: |
+          set -euo pipefail
+          rsync -az --delete --chmod=D755,F644 \
+            -e "ssh -i ~/.ssh/deploy_key -p ${SSH_PORT:-22} -o IdentitiesOnly=yes" \
+            output/ "${SSH_USER}@${SSH_HOST}:${DEPLOY_PATH}/"
