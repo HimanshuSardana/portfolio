@@ -114,15 +114,15 @@ html[data-vt="theme"]::view-transition-new(root){z-index:2;clip-path:circle(0 at
 <a class="section-link" href="https://github.com/HimanshuSardana?tab=repositories" target="_blank" rel="noreferrer">more on GitHub<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="M12 5l7 7-7 7"/></svg></a>
 </div>
 <ul class="post-list">
-<li><a class="work-row" href="https://github.com/HimanshuSardana/kite" target="_blank" rel="noreferrer"><span class="work-body"><span class="work-title">kite</span><span class="work-desc">A minimal, blazingly fast static site generator. Powers this site.</span></span><span class="meta">ssg · Go</span></a></li>
-<li><a class="work-row" href="https://github.com/HimanshuSardana/apollo" target="_blank" rel="noreferrer"><span class="work-body"><span class="work-title">apollo</span><span class="work-desc">A terminal-first AI coding assistant. Live at apollo.himanshu.co.</span></span><span class="meta">ai · Go</span></a></li>
-<li><a class="work-row" href="https://github.com/HimanshuSardana/camus" target="_blank" rel="noreferrer"><span class="work-body"><span class="work-title">camus</span><span class="work-desc">A minimal Apache Kafka clone: partitions, append-only logs and consumer groups.</span></span><span class="meta">kafka · Go</span></a></li>
-<li><a class="work-row" href="https://github.com/HimanshuSardana/manga-tui" target="_blank" rel="noreferrer"><span class="work-body"><span class="work-title">manga-tui</span><span class="work-desc">A TUI manga reader with search, library, offline cache and image-protocol support.</span></span><span class="meta">tui · Go</span></a></li>
-<li><a class="work-row" href="https://github.com/HimanshuSardana/vectra" target="_blank" rel="noreferrer"><span class="work-body"><span class="work-title">vectra</span><span class="work-desc">A TUI wrapper over ChromaDB for local vector search and RAG experiments.</span></span><span class="meta">rag · Python</span></a></li>
-<li><a class="work-row" href="https://github.com/HimanshuSardana/flashkv" target="_blank" rel="noreferrer"><span class="work-body"><span class="work-title">flashkv</span><span class="work-desc">A fast persistent key-value store written from scratch.</span></span><span class="meta">kv · Go</span></a></li>
-<li><a class="work-row" href="https://github.com/HimanshuSardana/rss-reader" target="_blank" rel="noreferrer"><span class="work-body"><span class="work-title">rss-reader</span><span class="work-desc">Three-pane desktop RSS reader with sqlite and full-text extraction.</span></span><span class="meta">tauri · Svelte</span></a></li>
-<li><a class="work-row" href="https://github.com/HimanshuSardana/cpos" target="_blank" rel="noreferrer"><span class="work-body"><span class="work-title">cpos</span><span class="work-desc">Capture Codeforces &amp; CSES problems, run tests and submit from VS Code or the terminal.</span></span><span class="meta">cp · TypeScript</span></a></li>
-<li><a class="work-row" href="https://github.com/HimanshuSardana/bonsai" target="_blank" rel="noreferrer"><span class="work-body"><span class="work-title">bonsai</span><span class="work-desc">A minimal Git frontend served through a Go static site generator.</span></span><span class="meta">git · Go</span></a></li>
+<li><a class="work-row" href="/kite/"><span class="work-body"><span class="work-title">kite</span><span class="work-desc">A minimal, blazingly fast static site generator. Powers this site.</span></span><span class="meta">ssg · Go</span></a></li>
+<li><a class="work-row" href="/apollo/"><span class="work-body"><span class="work-title">apollo</span><span class="work-desc">A terminal-first AI coding assistant. Live at apollo.himanshu.co.</span></span><span class="meta">ai · Go</span></a></li>
+<li><a class="work-row" href="/camus/"><span class="work-body"><span class="work-title">camus</span><span class="work-desc">A minimal Apache Kafka clone: partitions, append-only logs and consumer groups.</span></span><span class="meta">kafka · Go</span></a></li>
+<li><a class="work-row" href="/manga-tui/"><span class="work-body"><span class="work-title">manga-tui</span><span class="work-desc">A TUI manga reader with search, library, offline cache and image-protocol support.</span></span><span class="meta">tui · Go</span></a></li>
+<li><a class="work-row" href="/vectra/"><span class="work-body"><span class="work-title">vectra</span><span class="work-desc">A TUI wrapper over ChromaDB for local vector search and RAG experiments.</span></span><span class="meta">rag · Python</span></a></li>
+<li><a class="work-row" href="/flashkv/"><span class="work-body"><span class="work-title">flashkv</span><span class="work-desc">A fast persistent key-value store written from scratch.</span></span><span class="meta">kv · Go</span></a></li>
+<li><a class="work-row" href="/rss-reader/"><span class="work-body"><span class="work-title">rss-reader</span><span class="work-desc">Three-pane desktop RSS reader with sqlite and full-text extraction.</span></span><span class="meta">tauri · Svelte</span></a></li>
+<li><a class="work-row" href="/cpos/"><span class="work-body"><span class="work-title">cpos</span><span class="work-desc">Capture Codeforces &amp; CSES problems, run tests and submit from VS Code or the terminal.</span></span><span class="meta">cp · TypeScript</span></a></li>
+<li><a class="work-row" href="/bonsai/"><span class="work-body"><span class="work-title">bonsai</span><span class="work-desc">A minimal Git frontend served through a Go static site generator.</span></span><span class="meta">git · Go</span></a></li>
 </ul>
 </section>
 
@@ -134,10 +134,12 @@ html[data-vt="theme"]::view-transition-new(root){z-index:2;clip-path:circle(0 at
 {{ if .Posts }}
 <ul class="post-list">
 {{ range $p := .Posts }}
+{{ if not (or (eq $p.Slug "kite") (eq $p.Slug "apollo") (eq $p.Slug "camus") (eq $p.Slug "manga-tui") (eq $p.Slug "vectra") (eq $p.Slug "flashkv") (eq $p.Slug "rss-reader") (eq $p.Slug "cpos") (eq $p.Slug "bonsai")) }}
 <li><a class="note-row" href="{{ $p.Slug }}/">
 <h3>{{ $p.Title }}</h3>
 <span class="date"><time{{ if $p.DateTime }} datetime="{{ $p.DateTime }}"{{ end }}>{{ if $p.DateTime }}{{ slice $p.DateTime 0 4 }} · {{ slice $p.DateTime 5 7 }}{{ else }}{{ $p.Date }}{{ end }}</time></span>
 </a></li>
+{{ end }}
 {{ end }}
 </ul>
 {{ else }}
