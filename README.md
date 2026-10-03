@@ -1,4 +1,4 @@
-# himanshu.co — portfolio + blog
+# himanshu.co: portfolio + blog
 
 My portfolio and blog, built with [kite](https://github.com/HimanshuSardana/kite),
 my own Go static site generator. Selected work is curated from
