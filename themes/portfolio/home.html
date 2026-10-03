@@ -63,6 +63,12 @@ section{margin-top:3.2rem}
 .note-row .date{flex:0 0 auto;font-size:.86rem;color:var(--faint);white-space:nowrap;text-align:right}
 .note-row h3{flex:1;min-width:0;font-family:var(--sans);font-weight:400;font-size:.95rem;line-height:1.5;color:var(--text);text-decoration:underline;text-decoration-color:var(--faint);text-underline-offset:3px}
 .note-row:hover h3{text-decoration-color:var(--text)}
+/* scroll reveal: hero, section headings and rows fade and slide up as they
+   enter the viewport. The hidden state is applied only once JS adds .io, so
+   content stays visible without JavaScript. */
+.io .reveal{opacity:0;transform:translateY(16px);transition:opacity .55s ease,transform .55s cubic-bezier(.2,.7,.2,1)}
+.io .reveal.in{opacity:1;transform:none}
+@media (prefers-reduced-motion:reduce){.io .reveal{opacity:1;transform:none;transition:none}}
 /* project rows: name and description on one line (truncated with an
    ellipsis when it overflows), tags pushed to the right edge */
 .work-row{display:flex;align-items:baseline;gap:1.1rem;padding:.42rem 0;text-decoration:none}
@@ -177,6 +183,41 @@ html[data-vt="theme"]::view-transition-new(root){z-index:2;clip-path:circle(0 at
       var t = document.startViewTransition(flip);
       if (t && t.finished) t.finished.then(function(){ delete root.dataset.vt; }, function(){ delete root.dataset.vt; });
     } else { flip(); }
+  });
+})();
+</script>
+<script>
+// scroll reveal: reveal the hero, section headings and each list row as it
+// enters the viewport. Classes are added by JS, so no-JS content stays visible.
+(function(){
+  if (!('IntersectionObserver' in window)) return;
+  if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  var items = Array.prototype.slice.call(document.querySelectorAll('.blog-title, .intro, .actions, .section-head, .work-row, .note-row'));
+  if (!items.length) return;
+  document.documentElement.classList.add('io');
+  // stagger by position within each parent (list rows, then singles)
+  var counts = new Map();
+  items.forEach(function(el){
+    el.classList.add('reveal');
+    var parent = el.parentNode;
+    var n = counts.get(parent) || 0;
+    counts.set(parent, n + 1);
+    el.setAttribute('data-io', String(n % 24));
+  });
+  var io = new IntersectionObserver(function(entries){
+    entries.forEach(function(en){
+      if (!en.isIntersecting) return;
+      var el = en.target;
+      io.unobserve(el);
+      var i = parseInt(el.getAttribute('data-io') || '0', 10);
+      el.style.transitionDelay = Math.min(i, 12) * 45 + 'ms';
+      requestAnimationFrame(function(){ el.classList.add('in'); });
+    });
+  }, {rootMargin: '0px 0px -8% 0px', threshold: 0.01});
+  items.forEach(function(el){ io.observe(el); });
+  document.addEventListener('transitionend', function(e){
+    var t = e.target;
+    if (t && t.classList && t.classList.contains('reveal')) t.style.transitionDelay = '';
   });
 })();
 </script>
