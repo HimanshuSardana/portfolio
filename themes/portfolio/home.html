@@ -62,8 +62,8 @@ section{margin-top:3.2rem}
 .post-list{list-style:none;margin:0;padding:0}
 .post-list li{margin:0}
 .note-row{display:flex;align-items:baseline;gap:1.1rem;padding:.42rem 0;text-decoration:none}
-.note-row .date{flex:0 0 5.5rem;font-size:.86rem;color:var(--faint);white-space:nowrap}
-.note-row h3{font-family:var(--sans);font-weight:400;font-size:.95rem;line-height:1.5;color:var(--text);text-decoration:underline;text-decoration-color:var(--faint);text-underline-offset:3px}
+.note-row .date{flex:0 0 auto;font-size:.86rem;color:var(--faint);white-space:nowrap;text-align:right}
+.note-row h3{flex:1;min-width:0;font-family:var(--sans);font-weight:400;font-size:.95rem;line-height:1.5;color:var(--text);text-decoration:underline;text-decoration-color:var(--faint);text-underline-offset:3px}
 .note-row:hover h3{text-decoration-color:var(--text)}
 /* project rows: name and description on one line (truncated with an
    ellipsis when it overflows), tags pushed to the right edge */
@@ -134,8 +134,8 @@ html[data-vt="theme"]::view-transition-new(root){z-index:2;clip-path:circle(0 at
 <ul class="post-list">
 {{ range $p := .Posts }}
 <li><a class="note-row" href="{{ $p.Slug }}/">
-<span class="date"><time{{ if $p.DateTime }} datetime="{{ $p.DateTime }}"{{ end }}>{{ if $p.DateTime }}{{ slice $p.DateTime 0 4 }} · {{ slice $p.DateTime 5 7 }}{{ else }}{{ $p.Date }}{{ end }}</time></span>
 <h3>{{ $p.Title }}</h3>
+<span class="date"><time{{ if $p.DateTime }} datetime="{{ $p.DateTime }}"{{ end }}>{{ if $p.DateTime }}{{ slice $p.DateTime 0 4 }} · {{ slice $p.DateTime 5 7 }}{{ else }}{{ $p.Date }}{{ end }}</time></span>
 </a></li>
 {{ end }}
 </ul>
