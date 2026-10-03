@@ -31,6 +31,14 @@ kite new my-post.md
 
 Posts are plain Markdown with frontmatter (`title`, `date`, `tags`).
 
+## Design
+
+The theme follows kite's `minimal-notes` aesthetic: a sans/var palette with a
+greyscale accent, a dateline + underlined-title list for writing, the same row
+rhythm for selected work, a fixed sidebar table of contents on wide screens and
+a light/dark toggle. Home and post pages share the same variables and type
+scale, and tag pages reuse the post layout.
+
 ## Deployment
 
 Pushing to `main` runs `.github/workflows/deploy.yml`, which installs kite,
