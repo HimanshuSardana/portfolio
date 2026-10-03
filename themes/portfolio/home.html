@@ -3,12 +3,12 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<meta name="description" content="{{ .SiteTitle }}{{ if .AuthorBio }} — {{ .AuthorBio }}{{ end }}" />
+<meta name="description" content="{{ .SiteTitle }}{{ if .AuthorBio }}. {{ .AuthorBio }}{{ end }}" />
 <title>{{ .SiteTitle }}</title>
 <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin />
 <link href="https://cdn.jsdelivr.net/npm/@fontsource/iosevka@latest/400.css" rel="stylesheet" />
 <link href="https://cdn.jsdelivr.net/npm/@fontsource/iosevka@latest/500.css" rel="stylesheet" />
-<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 48 48'%3E%3Crect width='48' height='48' rx='11' fill='%23111110'/%3E%3Ctext x='24' y='33' font-family='Georgia,serif' font-size='26' fill='%23e5e5e5' text-anchor='middle'%3E%CE%BB%3C/text%3E%3C/svg%3E" />
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 48 48'%3E%3Crect width='48' height='48' rx='11' fill='%23111110'/%3E%3Cpath d='M15 17l7 7-7 7' fill='none' stroke='%23e5e5e5' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'/%3E%3Cpath d='M26 31h8' stroke='%23e5e5e5' stroke-width='3' stroke-linecap='round'/%3E%3C/svg%3E" />
 <style>
 :root{
   --bg:#101010;--surface:#171717;--text:#ededed;--body:#c9c9c9;--muted:#9c9c9c;--faint:#6b6b6b;
@@ -48,20 +48,22 @@ section{margin-top:3.2rem}
 .section-label{font-size:.7rem;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:var(--faint)}
 .section-link{font-size:.78rem;color:var(--muted);text-decoration:none;white-space:nowrap}
 .section-link:hover{color:var(--text)}
-/* list rows — YYYY · MM dateline plus underlined title, no rules */
+.section-link svg{width:12px;height:12px;vertical-align:-1px;margin-left:.1rem}
+/* list rows - YYYY · MM dateline plus underlined title, no rules */
 .post-list{list-style:none;margin:0;padding:0}
 .post-list li{margin:0}
 .note-row{display:flex;align-items:baseline;gap:1.1rem;padding:.42rem 0;text-decoration:none}
 .note-row .date{flex:0 0 5.5rem;font-size:.86rem;color:var(--faint);white-space:nowrap}
 .note-row h3{font-family:var(--sans);font-weight:400;font-size:.95rem;line-height:1.5;color:var(--text);text-decoration:underline;text-decoration-color:var(--faint);text-underline-offset:3px}
 .note-row:hover h3{text-decoration-color:var(--text)}
-/* project rows share the row rhythm: short label on the left */
-.work-row{display:flex;gap:1.1rem;padding:.6rem 0;text-decoration:none}
-.work-row .meta{flex:0 0 5.5rem;font-size:.86rem;color:var(--faint);white-space:nowrap;padding-top:.15rem}
-.work-body{flex:1;min-width:0}
-.work-body h3{font-family:var(--sans);font-weight:400;font-size:.95rem;line-height:1.5;color:var(--text);text-decoration:underline;text-decoration-color:var(--faint);text-underline-offset:3px;display:inline}
-.work-row:hover h3{text-decoration-color:var(--text)}
-.work-row p{font-size:.85rem;line-height:1.55;color:var(--muted);margin-top:.15rem}
+/* project rows reuse the row rhythm: short label, then name and description
+   on one line, truncated with an ellipsis when it overflows */
+.work-row{display:flex;align-items:baseline;gap:1.1rem;padding:.42rem 0;text-decoration:none}
+.work-row .meta{flex:0 0 5.5rem;font-size:.86rem;color:var(--faint);white-space:nowrap}
+.work-body{flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.work-title{font-family:var(--sans);font-weight:400;font-size:.95rem;color:var(--text);text-decoration:underline;text-decoration-color:var(--faint);text-underline-offset:3px}
+.work-row:hover .work-title{text-decoration-color:var(--text)}
+.work-desc{font-size:.9rem;color:var(--muted);margin-left:.55rem}
 .empty{color:var(--muted);padding:2rem 0}
 /* footer */
 footer{border-top:1px solid var(--border);margin:4rem 0 0;padding:1.2rem 0 3rem;font-size:.78rem;color:var(--faint);display:flex;justify-content:space-between;flex-wrap:wrap;gap:.5rem}
@@ -84,30 +86,30 @@ footer a:hover{color:var(--text)}
 
 <div class="page">
 <h1 class="blog-title">{{ .SiteTitle }}</h1>
-<p class="intro">I build fast tools with <strong>Go, Python &amp; TypeScript</strong> — TUIs, static site generators, devtools and systems projects. This site is built with <a href="https://github.com/HimanshuSardana/kite">kite</a>, my own static site generator.</p>
+<p class="intro">I build fast tools with <strong>Go, Python &amp; TypeScript</strong>: TUIs, static site generators, devtools and systems projects. This site is built with <a href="https://github.com/HimanshuSardana/kite">kite</a>, my own static site generator.</p>
 
 <section id="work">
 <div class="section-head">
 <span class="section-label">Selected work</span>
-<a class="section-link" href="https://github.com/HimanshuSardana?tab=repositories" target="_blank" rel="noreferrer">more on GitHub →</a>
+<a class="section-link" href="https://github.com/HimanshuSardana?tab=repositories" target="_blank" rel="noreferrer">more on GitHub<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="M12 5l7 7-7 7"/></svg></a>
 </div>
 <ul class="post-list">
-<li><a class="work-row" href="https://github.com/HimanshuSardana/kite" target="_blank" rel="noreferrer"><span class="meta">ssg · Go</span><div class="work-body"><h3>kite</h3><p>A minimal, blazingly fast static site generator. Powers this site.</p></div></a></li>
-<li><a class="work-row" href="https://github.com/HimanshuSardana/apollo" target="_blank" rel="noreferrer"><span class="meta">ai · Go</span><div class="work-body"><h3>apollo</h3><p>A terminal-first AI coding assistant. Live at apollo.himanshu.co.</p></div></a></li>
-<li><a class="work-row" href="https://github.com/HimanshuSardana/camus" target="_blank" rel="noreferrer"><span class="meta">kafka · Go</span><div class="work-body"><h3>camus</h3><p>A minimal Apache Kafka clone: partitions, append-only logs and consumer groups.</p></div></a></li>
-<li><a class="work-row" href="https://github.com/HimanshuSardana/manga-tui" target="_blank" rel="noreferrer"><span class="meta">tui · Go</span><div class="work-body"><h3>manga-tui</h3><p>A TUI manga reader with search, library, offline cache and image-protocol support.</p></div></a></li>
-<li><a class="work-row" href="https://github.com/HimanshuSardana/vectra" target="_blank" rel="noreferrer"><span class="meta">rag · Python</span><div class="work-body"><h3>vectra</h3><p>A TUI wrapper over ChromaDB for local vector search and RAG experiments.</p></div></a></li>
-<li><a class="work-row" href="https://github.com/HimanshuSardana/flashkv" target="_blank" rel="noreferrer"><span class="meta">kv · Go</span><div class="work-body"><h3>flashkv</h3><p>A fast persistent key-value store written from scratch.</p></div></a></li>
-<li><a class="work-row" href="https://github.com/HimanshuSardana/rss-reader" target="_blank" rel="noreferrer"><span class="meta">tauri · Svelte</span><div class="work-body"><h3>rss-reader</h3><p>Three-pane desktop RSS reader with sqlite and full-text extraction.</p></div></a></li>
-<li><a class="work-row" href="https://github.com/HimanshuSardana/cpos" target="_blank" rel="noreferrer"><span class="meta">cp · TypeScript</span><div class="work-body"><h3>cpos</h3><p>Capture Codeforces &amp; CSES problems, run tests and submit from VS Code or the terminal.</p></div></a></li>
-<li><a class="work-row" href="https://github.com/HimanshuSardana/bonsai" target="_blank" rel="noreferrer"><span class="meta">git · Go</span><div class="work-body"><h3>bonsai</h3><p>A minimal Git frontend served through a Go static site generator.</p></div></a></li>
+<li><a class="work-row" href="https://github.com/HimanshuSardana/kite" target="_blank" rel="noreferrer"><span class="meta">ssg · Go</span><span class="work-body"><span class="work-title">kite</span><span class="work-desc">A minimal, blazingly fast static site generator. Powers this site.</span></span></a></li>
+<li><a class="work-row" href="https://github.com/HimanshuSardana/apollo" target="_blank" rel="noreferrer"><span class="meta">ai · Go</span><span class="work-body"><span class="work-title">apollo</span><span class="work-desc">A terminal-first AI coding assistant. Live at apollo.himanshu.co.</span></span></a></li>
+<li><a class="work-row" href="https://github.com/HimanshuSardana/camus" target="_blank" rel="noreferrer"><span class="meta">kafka · Go</span><span class="work-body"><span class="work-title">camus</span><span class="work-desc">A minimal Apache Kafka clone: partitions, append-only logs and consumer groups.</span></span></a></li>
+<li><a class="work-row" href="https://github.com/HimanshuSardana/manga-tui" target="_blank" rel="noreferrer"><span class="meta">tui · Go</span><span class="work-body"><span class="work-title">manga-tui</span><span class="work-desc">A TUI manga reader with search, library, offline cache and image-protocol support.</span></span></a></li>
+<li><a class="work-row" href="https://github.com/HimanshuSardana/vectra" target="_blank" rel="noreferrer"><span class="meta">rag · Python</span><span class="work-body"><span class="work-title">vectra</span><span class="work-desc">A TUI wrapper over ChromaDB for local vector search and RAG experiments.</span></span></a></li>
+<li><a class="work-row" href="https://github.com/HimanshuSardana/flashkv" target="_blank" rel="noreferrer"><span class="meta">kv · Go</span><span class="work-body"><span class="work-title">flashkv</span><span class="work-desc">A fast persistent key-value store written from scratch.</span></span></a></li>
+<li><a class="work-row" href="https://github.com/HimanshuSardana/rss-reader" target="_blank" rel="noreferrer"><span class="meta">tauri · Svelte</span><span class="work-body"><span class="work-title">rss-reader</span><span class="work-desc">Three-pane desktop RSS reader with sqlite and full-text extraction.</span></span></a></li>
+<li><a class="work-row" href="https://github.com/HimanshuSardana/cpos" target="_blank" rel="noreferrer"><span class="meta">cp · TypeScript</span><span class="work-body"><span class="work-title">cpos</span><span class="work-desc">Capture Codeforces &amp; CSES problems, run tests and submit from VS Code or the terminal.</span></span></a></li>
+<li><a class="work-row" href="https://github.com/HimanshuSardana/bonsai" target="_blank" rel="noreferrer"><span class="meta">git · Go</span><span class="work-body"><span class="work-title">bonsai</span><span class="work-desc">A minimal Git frontend served through a Go static site generator.</span></span></a></li>
 </ul>
 </section>
 
 <section id="writing">
 <div class="section-head">
 <span class="section-label">Writing</span>
-<a class="section-link" href="/feed.xml">RSS →</a>
+<a class="section-link" href="/feed.xml">RSS<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="M12 5l7 7-7 7"/></svg></a>
 </div>
 {{ if .Posts }}
 <ul class="post-list">
@@ -119,7 +121,7 @@ footer a:hover{color:var(--text)}
 {{ end }}
 </ul>
 {{ else }}
-<p class="empty">No posts yet — add a Markdown file to <code>content/</code>.</p>
+<p class="empty">No posts yet. Add a Markdown file to <code>content/</code>.</p>
 {{ end }}
 </section>
 
