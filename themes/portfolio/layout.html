@@ -87,7 +87,11 @@ footer{border-top:1px solid var(--border);margin-top:3rem;padding:1.5rem 0 2.5re
 footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:.5rem}
 footer a{color:var(--muted);text-decoration:none}
 footer a:hover{color:var(--text)}
-@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+/* theme reveal: the incoming theme expands as a circle from the toggle */
+html[data-vt="theme"]::view-transition-old(root),html[data-vt="theme"]::view-transition-new(root){animation:none;mix-blend-mode:normal}
+html[data-vt="theme"]::view-transition-new(root){z-index:2;clip-path:circle(0 at var(--vt-x) var(--vt-y));animation:vt-circle .6s cubic-bezier(.3,.7,.3,1) forwards}
+@keyframes vt-circle{to{clip-path:circle(var(--vt-r) at var(--vt-x) var(--vt-y))}}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}html[data-vt="theme"]::view-transition-old(root),html[data-vt="theme"]::view-transition-new(root){animation:none}}
 </style>
 </head>
 <body>

@@ -69,6 +69,11 @@ section{margin-top:3.2rem}
 footer{border-top:1px solid var(--border);margin:4rem 0 0;padding:1.2rem 0 3rem;font-size:.78rem;color:var(--faint);display:flex;justify-content:space-between;flex-wrap:wrap;gap:.5rem}
 footer a{color:var(--muted);text-decoration:none}
 footer a:hover{color:var(--text)}
+/* theme reveal: the incoming theme expands as a circle from the toggle */
+html[data-vt="theme"]::view-transition-old(root),html[data-vt="theme"]::view-transition-new(root){animation:none;mix-blend-mode:normal}
+html[data-vt="theme"]::view-transition-new(root){z-index:2;clip-path:circle(0 at var(--vt-x) var(--vt-y));animation:vt-circle .6s cubic-bezier(.3,.7,.3,1) forwards}
+@keyframes vt-circle{to{clip-path:circle(var(--vt-r) at var(--vt-x) var(--vt-y))}}
+@media (prefers-reduced-motion:reduce){html[data-vt="theme"]::view-transition-old(root),html[data-vt="theme"]::view-transition-new(root){animation:none}}
 </style>
 </head>
 <body>
