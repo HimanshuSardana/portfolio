@@ -24,6 +24,7 @@
 html{scroll-behavior:smooth;scrollbar-gutter:stable}
 body{overflow-x:clip;background:var(--bg);color:var(--body);font-family:var(--sans);font-size:16px;line-height:1.7;-webkit-font-smoothing:antialiased;transition:background .2s}
 ::selection{background:var(--selection)}
+a{color:inherit}
 .page{max-width:720px;margin:0 auto;padding:0 1.25rem}
 /* top bar */
 .topbar{display:flex;align-items:center;justify-content:space-between;gap:1.4rem;padding:1rem 1.5rem;max-width:1100px;margin:0 auto;font-size:.85rem;line-height:1.4;color:var(--muted)}
@@ -42,6 +43,10 @@ body{overflow-x:clip;background:var(--bg);color:var(--body);font-family:var(--sa
 .intro strong{color:var(--text);font-weight:600}
 .intro a{color:var(--text);text-decoration:underline;text-decoration-color:var(--faint);text-underline-offset:3px}
 .intro a:hover{text-decoration-color:var(--text)}
+.actions{display:flex;flex-wrap:wrap;gap:.6rem;margin-top:1.6rem}
+.btn{display:inline-flex;align-items:center;gap:.5rem;font-size:.85rem;color:var(--text);text-decoration:none;border:1px solid var(--border);border-radius:999px;padding:.45rem 1rem;transition:border-color .2s,background .2s}
+.btn:hover{border-color:var(--muted);background:var(--surface)}
+.btn svg{width:15px;height:15px;flex:0 0 auto}
 /* section headings */
 section{margin-top:3.2rem}
 .section-head{display:flex;align-items:baseline;justify-content:space-between;gap:1rem;margin-bottom:1.1rem}
@@ -56,11 +61,11 @@ section{margin-top:3.2rem}
 .note-row .date{flex:0 0 5.5rem;font-size:.86rem;color:var(--faint);white-space:nowrap}
 .note-row h3{font-family:var(--sans);font-weight:400;font-size:.95rem;line-height:1.5;color:var(--text);text-decoration:underline;text-decoration-color:var(--faint);text-underline-offset:3px}
 .note-row:hover h3{text-decoration-color:var(--text)}
-/* project rows reuse the row rhythm: short label, then name and description
-   on one line, truncated with an ellipsis when it overflows */
+/* project rows: name and description on one line (truncated with an
+   ellipsis when it overflows), tags pushed to the right edge */
 .work-row{display:flex;align-items:baseline;gap:1.1rem;padding:.42rem 0;text-decoration:none}
-.work-row .meta{flex:0 0 5.5rem;font-size:.86rem;color:var(--faint);white-space:nowrap}
-.work-body{flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.work-row .meta{flex:0 0 auto;font-size:.86rem;color:var(--faint);white-space:nowrap;text-align:right}
+.work-body{flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:var(--muted)}
 .work-title{font-family:var(--sans);font-weight:400;font-size:.95rem;color:var(--text);text-decoration:underline;text-decoration-color:var(--faint);text-underline-offset:3px}
 .work-row:hover .work-title{text-decoration-color:var(--text)}
 .work-desc{font-size:.9rem;color:var(--muted);margin-left:.55rem}
@@ -93,21 +98,26 @@ html[data-vt="theme"]::view-transition-new(root){z-index:2;clip-path:circle(0 at
 <h1 class="blog-title">{{ .SiteTitle }}</h1>
 <p class="intro">I build fast tools with <strong>Go, Python &amp; TypeScript</strong>: TUIs, static site generators, devtools and systems projects. This site is built with <a href="https://github.com/HimanshuSardana/kite">kite</a>, my own static site generator.</p>
 
+<div class="actions">
+<a class="btn" href="/resume.pdf" target="_blank" rel="noreferrer"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/><path d="M8 13h8"/><path d="M8 17h5"/></svg>Resume</a>
+<a class="btn" href="https://github.com/HimanshuSardana" target="_blank" rel="noreferrer"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 .5C5.37.5 0 5.87 0 12.5c0 5.3 3.44 9.8 8.21 11.39.6.11.82-.26.82-.58 0-.29-.01-1.04-.02-2.05-3.34.73-4.04-1.61-4.04-1.61-.55-1.39-1.34-1.76-1.34-1.76-1.09-.75.08-.73.08-.73 1.21.09 1.84 1.24 1.84 1.24 1.07 1.84 2.81 1.31 3.5 1 .11-.78.42-1.31.76-1.61-2.67-.3-5.47-1.34-5.47-5.96 0-1.32.47-2.39 1.24-3.23-.12-.3-.54-1.52.12-3.18 0 0 1.01-.32 3.3 1.23a11.5 11.5 0 0 1 6 0c2.29-1.55 3.3-1.23 3.3-1.23.66 1.66.24 2.88.12 3.18.77.84 1.24 1.91 1.24 3.23 0 4.63-2.8 5.65-5.48 5.95.43.37.81 1.1.81 2.22 0 1.6-.01 2.9-.01 3.29 0 .32.21.7.82.58A12.01 12.01 0 0 0 24 12.5C24 5.87 18.63.5 12 .5z"/></svg>GitHub</a>
+</div>
+
 <section id="work">
 <div class="section-head">
 <span class="section-label">Selected work</span>
 <a class="section-link" href="https://github.com/HimanshuSardana?tab=repositories" target="_blank" rel="noreferrer">more on GitHub<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="M12 5l7 7-7 7"/></svg></a>
 </div>
 <ul class="post-list">
-<li><a class="work-row" href="https://github.com/HimanshuSardana/kite" target="_blank" rel="noreferrer"><span class="meta">ssg · Go</span><span class="work-body"><span class="work-title">kite</span><span class="work-desc">A minimal, blazingly fast static site generator. Powers this site.</span></span></a></li>
-<li><a class="work-row" href="https://github.com/HimanshuSardana/apollo" target="_blank" rel="noreferrer"><span class="meta">ai · Go</span><span class="work-body"><span class="work-title">apollo</span><span class="work-desc">A terminal-first AI coding assistant. Live at apollo.himanshu.co.</span></span></a></li>
-<li><a class="work-row" href="https://github.com/HimanshuSardana/camus" target="_blank" rel="noreferrer"><span class="meta">kafka · Go</span><span class="work-body"><span class="work-title">camus</span><span class="work-desc">A minimal Apache Kafka clone: partitions, append-only logs and consumer groups.</span></span></a></li>
-<li><a class="work-row" href="https://github.com/HimanshuSardana/manga-tui" target="_blank" rel="noreferrer"><span class="meta">tui · Go</span><span class="work-body"><span class="work-title">manga-tui</span><span class="work-desc">A TUI manga reader with search, library, offline cache and image-protocol support.</span></span></a></li>
-<li><a class="work-row" href="https://github.com/HimanshuSardana/vectra" target="_blank" rel="noreferrer"><span class="meta">rag · Python</span><span class="work-body"><span class="work-title">vectra</span><span class="work-desc">A TUI wrapper over ChromaDB for local vector search and RAG experiments.</span></span></a></li>
-<li><a class="work-row" href="https://github.com/HimanshuSardana/flashkv" target="_blank" rel="noreferrer"><span class="meta">kv · Go</span><span class="work-body"><span class="work-title">flashkv</span><span class="work-desc">A fast persistent key-value store written from scratch.</span></span></a></li>
-<li><a class="work-row" href="https://github.com/HimanshuSardana/rss-reader" target="_blank" rel="noreferrer"><span class="meta">tauri · Svelte</span><span class="work-body"><span class="work-title">rss-reader</span><span class="work-desc">Three-pane desktop RSS reader with sqlite and full-text extraction.</span></span></a></li>
-<li><a class="work-row" href="https://github.com/HimanshuSardana/cpos" target="_blank" rel="noreferrer"><span class="meta">cp · TypeScript</span><span class="work-body"><span class="work-title">cpos</span><span class="work-desc">Capture Codeforces &amp; CSES problems, run tests and submit from VS Code or the terminal.</span></span></a></li>
-<li><a class="work-row" href="https://github.com/HimanshuSardana/bonsai" target="_blank" rel="noreferrer"><span class="meta">git · Go</span><span class="work-body"><span class="work-title">bonsai</span><span class="work-desc">A minimal Git frontend served through a Go static site generator.</span></span></a></li>
+<li><a class="work-row" href="https://github.com/HimanshuSardana/kite" target="_blank" rel="noreferrer"><span class="work-body"><span class="work-title">kite</span><span class="work-desc">A minimal, blazingly fast static site generator. Powers this site.</span></span><span class="meta">ssg · Go</span></a></li>
+<li><a class="work-row" href="https://github.com/HimanshuSardana/apollo" target="_blank" rel="noreferrer"><span class="work-body"><span class="work-title">apollo</span><span class="work-desc">A terminal-first AI coding assistant. Live at apollo.himanshu.co.</span></span><span class="meta">ai · Go</span></a></li>
+<li><a class="work-row" href="https://github.com/HimanshuSardana/camus" target="_blank" rel="noreferrer"><span class="work-body"><span class="work-title">camus</span><span class="work-desc">A minimal Apache Kafka clone: partitions, append-only logs and consumer groups.</span></span><span class="meta">kafka · Go</span></a></li>
+<li><a class="work-row" href="https://github.com/HimanshuSardana/manga-tui" target="_blank" rel="noreferrer"><span class="work-body"><span class="work-title">manga-tui</span><span class="work-desc">A TUI manga reader with search, library, offline cache and image-protocol support.</span></span><span class="meta">tui · Go</span></a></li>
+<li><a class="work-row" href="https://github.com/HimanshuSardana/vectra" target="_blank" rel="noreferrer"><span class="work-body"><span class="work-title">vectra</span><span class="work-desc">A TUI wrapper over ChromaDB for local vector search and RAG experiments.</span></span><span class="meta">rag · Python</span></a></li>
+<li><a class="work-row" href="https://github.com/HimanshuSardana/flashkv" target="_blank" rel="noreferrer"><span class="work-body"><span class="work-title">flashkv</span><span class="work-desc">A fast persistent key-value store written from scratch.</span></span><span class="meta">kv · Go</span></a></li>
+<li><a class="work-row" href="https://github.com/HimanshuSardana/rss-reader" target="_blank" rel="noreferrer"><span class="work-body"><span class="work-title">rss-reader</span><span class="work-desc">Three-pane desktop RSS reader with sqlite and full-text extraction.</span></span><span class="meta">tauri · Svelte</span></a></li>
+<li><a class="work-row" href="https://github.com/HimanshuSardana/cpos" target="_blank" rel="noreferrer"><span class="work-body"><span class="work-title">cpos</span><span class="work-desc">Capture Codeforces &amp; CSES problems, run tests and submit from VS Code or the terminal.</span></span><span class="meta">cp · TypeScript</span></a></li>
+<li><a class="work-row" href="https://github.com/HimanshuSardana/bonsai" target="_blank" rel="noreferrer"><span class="work-body"><span class="work-title">bonsai</span><span class="work-desc">A minimal Git frontend served through a Go static site generator.</span></span><span class="meta">git · Go</span></a></li>
 </ul>
 </section>
 
