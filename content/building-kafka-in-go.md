@@ -1,7 +1,6 @@
 ---
 title: Building a minimal Kafka clone in Go
 date: 2025-06-14
-tags: [go, kafka]
 ---
 
 For [camus](https://github.com/HimanshuSardana/camus) I wanted to actually understand Kafka, not just use it. So I re-implemented the core: topics, partitions, an append-only log, and consumer groups.
@@ -14,8 +13,8 @@ For [camus](https://github.com/HimanshuSardana/camus) I wanted to actually under
 
 ## Lessons
 
-- **Batching is everything** — fsync per message kills throughput; group commit saves you.
-- **Offsets are just integers** — most of Kafka's magic is bookkeeping done well.
+- **Batching is everything**: fsync per message kills throughput; group commit saves you.
+- **Offsets are just integers**: most of Kafka's magic is bookkeeping done well.
 - Go's `net` package plus goroutines make the broker surprisingly compact (~1k LOC for the core).
 
 ```go
