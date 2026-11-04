@@ -151,6 +151,7 @@ It outputs a single number (the **score**) instead of 3 values like OpenJev.
 The other values can be computed as a function of the score.
 
 The rubric for deciding the score includes:
+
 - Skill Coverage
 - Domain Fit
 - Seniority Fit
@@ -224,6 +225,7 @@ looked up in the calibration table, it returned the highest number it had (0.67)
 seemingly reducing the model's accuracy by half.
 
 While benchmarking the model's performance, the metrics I was looking at were:
+
 - MAE
 - Spearman
 
