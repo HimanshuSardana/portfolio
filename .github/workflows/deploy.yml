@@ -8,6 +8,7 @@ on:
       - "themes/**"
       - "static/**"
       - "config.yaml"
+      - "og.typ"
       - ".github/workflows/deploy.yml"
   workflow_dispatch:
 
@@ -36,11 +37,55 @@ jobs:
         with:
           go-version: "1.25"
 
+      # Open graph cards are rendered with Typst. Version pinned so the
+      # generated PNGs stay identical between builds.
+      - name: Set up Typst
+        uses: typst-community/setup-typst@v5
+        with:
+          typst-version: "0.15.1"
+
+      # og.typ asks for "Iosevka NF", which runners do not ship. The Nerd Fonts
+      # release is ~92MB, so cache just the two weights the card needs.
+      - name: Cache card font
+        uses: actions/cache@v4
+        with:
+          path: ${{ runner.temp }}/og-fonts
+          key: iosevka-nf-3.5.1
+
+      - name: Install card font
+        run: |
+          set -euo pipefail
+          font_dir="$RUNNER_TEMP/og-fonts"
+          if [ -f "$font_dir/IosevkaNerdFont-Regular.ttf" ]; then
+            echo "Iosevka NF already cached"
+            exit 0
+          fi
+          mkdir -p "$font_dir"
+          curl -fsSL -o "$RUNNER_TEMP/iosevka.tar.xz" \
+            https://github.com/ryanoasis/nerd-fonts/releases/download/v3.5.1/Iosevka.tar.xz
+          tar -xJf "$RUNNER_TEMP/iosevka.tar.xz" -C "$font_dir" \
+            IosevkaNerdFont-Regular.ttf IosevkaNerdFont-Bold.ttf
+          rm -f "$RUNNER_TEMP/iosevka.tar.xz"
+
+      # Pinned to the commit that adds Typst OG cards; move back to @latest
+      # once a kite release contains it.
       - name: Install kite
-        run: go install github.com/HimanshuSardana/kite@latest
+        run: go install github.com/HimanshuSardana/kite@346f7018be88b01f2de47b7c5cd1ba8cd743e719
 
       - name: Build site
-        run: "$(go env GOPATH)/bin/kite build"
+        env:
+          TYPST_FONT_PATHS: ${{ runner.temp }}/og-fonts
+        run: |
+          set -euo pipefail
+          "$(go env GOPATH)/bin/kite" build
+
+          posts=$(find content -name '*.md' | wc -l)
+          cards=$(find output -name og.png | wc -l)
+          if [ "$cards" -ne "$posts" ]; then
+            echo "expected $posts og.png cards, found $cards" >&2
+            exit 1
+          fi
+          echo "generated $cards open graph cards"
 
       - name: Configure SSH
         env:

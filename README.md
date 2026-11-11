@@ -18,6 +18,7 @@ kite build          # render into output/
 ```
 config.yaml                  site title, author, theme
 content/*.md                 one file per blog post
+og.typ                       Typst template for post social cards
 themes/portfolio/            the theme (home.html + layout.html)
 output/                      build output (gitignored)
 .github/workflows/deploy.yml build and rsync to the server
@@ -30,6 +31,19 @@ kite new my-post.md
 ```
 
 Posts are plain Markdown with frontmatter (`title`, `date`, `tags`).
+
+## Social cards
+
+Every post gets a 1200×630 `og.png` rendered from [`og.typ`](og.typ) by kite's
+Typst support, written to `output/<slug>/og.png` and advertised through
+`og:image` / `twitter:image` tags that kite injects into the page head. The
+template receives the post title and author through `sys.inputs`, so edit
+`og.typ` to restyle every card at once.
+
+Cards are rendered at deploy time, so CI installs pinned versions of Typst and
+the Iosevka NF font the template asks for (cached between runs). Rendering is
+`--ppi 72`, so the template's `width: 1200pt, height: 630pt` page maps 1:1 to
+pixels.
 
 ## Design
 
