@@ -10,6 +10,7 @@
 <link href="https://cdn.jsdelivr.net/npm/@fontsource/iosevka@latest/500.css" rel="stylesheet" />
 <link href="https://cdn.jsdelivr.net/npm/@fontsource-variable/manrope@latest/index.css" rel="stylesheet" />
 <link href="https://tikzjax.com/v1/fonts.css" rel="stylesheet" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css" />
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 48 48'%3E%3Crect width='48' height='48' rx='11' fill='%23111110'/%3E%3Cpath d='M15 17l7 7-7 7' fill='none' stroke='%23e5e5e5' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'/%3E%3Cpath d='M26 31h8' stroke='%23e5e5e5' stroke-width='3' stroke-linecap='round'/%3E%3C/svg%3E" />
 <style>
 :root{
@@ -413,6 +414,8 @@ html:not([data-theme="light"]) .prose .tikz svg{filter:invert(1) hue-rotate(180d
 </script>
 <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-core.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/plugins/autoloader/prism-autoloader.min.js" data-autoloader-path="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js" onload="renderMathInElement(document.body,{delimiters:[{left:'$$',right:'$$',display:true},{left:'\\[',right:'\\]',display:true},{left:'\\(',right:'\\)',display:false}],ignoredTags:['script','noscript','style','textarea','pre','code']});"></script>
 <script src="https://tikzjax.com/v1/tikzjax.js"></script>
 <script>
 // Capture TikZJax's on-load renderer so diagrams render on demand (see the
